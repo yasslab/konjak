@@ -1,6 +1,6 @@
 # Konjak
 
-TODO: Write a gem description
+TMX(Translation Memory XML) tools for ruby
 
 ## Installation
 
