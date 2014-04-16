@@ -1,5 +1,5 @@
 module Konjak
-  class Map < Structual
+  class Map < StructuralElement
     # required attrs
     attr_accessor :unicode
 
