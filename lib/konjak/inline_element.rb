@@ -1,5 +1,5 @@
 module Konjak
   # content markup
-  class InlineElement
+  class InlineElement < Element
   end
 end

@@ -1,5 +1,5 @@
 module Konjak
   # container
-  class StructuralElement
+  class StructuralElement < Element
   end
 end
