@@ -6,6 +6,9 @@ module Konjak
     # optional attrs
     attr_accessor :o_encoding, :creation_date, :creation_id, :change_date, :change_id
 
+    def initialize(header)
+    end
+
     def can_contain?(element)
       [Note, UserDefinedEncoding, Property].any? {|c| c === element }
     end

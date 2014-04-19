@@ -8,6 +8,18 @@ describe Konjak do
   it { is_expected.to be_kind_of Konjak::Tmx }
 
   its(:version) { is_expected.to eq '1.4' }
+
+  describe 'header' do
+    subject { super().header }
+
+    it { is_expected.to be_instance_of Konjak::Header }
+  end
+
+  describe 'body' do
+    subject { super().body }
+
+    it { is_expected.to be_instance_of Konjak::Body }
+  end
 end
 
 # sample document from http://www.ttt.org/oscarstandards/tmx/#AppSample
