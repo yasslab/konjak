@@ -6,6 +6,8 @@ describe Konjak do
   subject { Konjak.parse(sample_doc) }
 
   it { is_expected.to be_kind_of Konjak::Tmx }
+
+  its(:version) { is_expected.to eq '1.4' }
 end
 
 # sample document from http://www.ttt.org/oscarstandards/tmx/#AppSample
