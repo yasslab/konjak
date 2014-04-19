@@ -3,6 +3,10 @@ module Konjak
     # required attrs
     attr_accessor :version
 
+    def initialize(tmx)
+      @version = tmx[:version]
+    end
+
     # FIXME
     #   One <header> followed by
     #   One <body> element.

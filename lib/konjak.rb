@@ -1,4 +1,5 @@
 require 'konjak/version'
+require 'konjak/parser'
 
 # not elements
 require 'konjak/code_data'
@@ -31,4 +32,9 @@ require 'konjak/sub_flow'
 require 'konjak/unknown_tag'
 
 module Konjak
+  class << self
+    def parse(xml)
+      Parser.new.parse(xml)
+    end
+  end
 end
