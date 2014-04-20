@@ -33,6 +33,13 @@ describe Konjak do
       its(:size) { is_expected.to eq 1 }
       it { is_expected.to be_all {|n| n.instance_of? Konjak::Note } }
     end
+
+    describe '#user_defined_encodings' do
+      subject { super().user_defined_encodings }
+
+      its(:size) { is_expected.to eq 1 }
+      it { is_expected.to be_all {|n| n.instance_of? Konjak::UserDefinedEncoding } }
+    end
   end
 
   describe 'body' do

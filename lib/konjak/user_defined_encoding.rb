@@ -8,6 +8,9 @@ module Konjak
     # optional attrs
     attr_accessor :base
 
+    def initialize(ude)
+    end
+
     def can_contain?(element)
       Map === element
     end

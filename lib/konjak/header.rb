@@ -7,7 +7,7 @@ module Konjak
     attr_accessor :o_encoding, :creation_date, :creation_id, :change_date, :change_id
 
     # children
-    attr_accessor :notes
+    attr_accessor :notes, :user_defined_encodings
 
     def initialize(header)
       # required attrs
@@ -27,7 +27,8 @@ module Konjak
       @change_id     = header[:changeid]
 
       # children
-      @notes = header.children.select {|c| c.name == 'note' }.map {|n| Note.new n }
+      @notes                  = header.children.select {|c| c.name == 'note' }.map {|n| Note.new n }
+      @user_defined_encodings = header.children.select {|c| c.name == 'ude' }.map {|n| UserDefinedEncoding.new n }
     end
 
     def can_contain?(element)
