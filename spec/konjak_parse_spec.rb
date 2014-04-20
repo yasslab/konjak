@@ -40,6 +40,13 @@ describe Konjak do
       its(:size) { is_expected.to eq 1 }
       it { is_expected.to be_all {|n| n.instance_of? Konjak::UserDefinedEncoding } }
     end
+
+    describe '#properties' do
+      subject { super().properties }
+
+      its(:size) { is_expected.to eq 1 }
+      it { is_expected.to be_all {|n| n.instance_of? Konjak::Property } }
+    end
   end
 
   describe 'body' do

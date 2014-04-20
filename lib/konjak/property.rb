@@ -6,6 +6,9 @@ module Konjak
     # optional attrs
     attr_accessor :xml_lang, :o_encoding
 
+    def initialize(property)
+    end
+
     def can_contain?(element)
       # FIXME
       #    Tool-specific data or text.
