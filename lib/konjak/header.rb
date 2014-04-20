@@ -20,11 +20,11 @@ module Konjak
       @data_type             = header[:datatype]
 
       # optional attrs
-      @o_encoding            = header[:"o-encoding"]
-      @creation_date         = header[:creationdate]
-      @creation_id           = header[:creationid]
-      @change_date           = header[:changedate]
-      @change_id             = header[:changeid]
+      @o_encoding    = header[:"o-encoding"]
+      @creation_date = header[:creationdate]
+      @creation_id   = header[:creationid]
+      @change_date   = header[:changedate]
+      @change_id     = header[:changeid]
 
       # children
       @notes = header.children.select {|c| c.name == 'note' }.map {|n| Note.new n }
