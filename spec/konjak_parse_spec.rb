@@ -59,6 +59,15 @@ describe Konjak do
 
       its(:size) { is_expected.to eq 2 }
       it { is_expected.to be_all {|tu| tu.instance_of? Konjak::TranslationUnit } }
+
+      describe 'translation unit 0001' do
+        subject { super().detect {|tu| tu.tuid == '0001' } }
+
+        its(:tuid)            { is_expected.to eq '0001' }
+        its(:data_type)       { is_expected.to eq 'Text' }
+        its(:usage_count)     { is_expected.to eq '2' }
+        its(:last_usage_date) { is_expected.to eq '19970314T023401Z' }
+      end
     end
   end
 end

@@ -7,6 +7,11 @@ module Konjak
     attr_accessor :src_lang
 
     def initialize(tu)
+      # attrs
+      @tuid            = tu[:tuid]
+      @data_type       = tu[:datatype]
+      @usage_count     = tu[:usagecount]
+      @last_usage_date = tu[:lastusagedate]
     end
 
     def can_contain?(element)
