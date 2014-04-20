@@ -26,6 +26,13 @@ describe Konjak do
     its(:change_date)           { is_expected.to eq '20020413T023401Z' }
     its(:change_id)             { is_expected.to eq 'Amity' }
     its(:o_encoding)            { is_expected.to eq 'iso-8859-1' }
+
+    describe '#notes' do
+      subject { super().notes }
+
+      its(:size) { is_expected.to eq 1 }
+      it { is_expected.to be_all {|n| n.instance_of? Konjak::Note } }
+    end
   end
 
   describe 'body' do

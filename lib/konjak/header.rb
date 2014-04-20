@@ -6,6 +6,9 @@ module Konjak
     # optional attrs
     attr_accessor :o_encoding, :creation_date, :creation_id, :change_date, :change_id
 
+    # children
+    attr_accessor :notes
+
     def initialize(header)
       # required attrs
       @creation_tool         = header[:creationtool]
@@ -22,6 +25,9 @@ module Konjak
       @creation_id           = header[:creationid]
       @change_date           = header[:changedate]
       @change_id             = header[:changeid]
+
+      # children
+      @notes = header.children.select {|c| c.name == 'note' }.map {|n| Note.new n }
     end
 
     def can_contain?(element)
