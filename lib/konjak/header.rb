@@ -7,6 +7,21 @@ module Konjak
     attr_accessor :o_encoding, :creation_date, :creation_id, :change_date, :change_id
 
     def initialize(header)
+      # required attrs
+      @creation_tool         = header[:creationtool]
+      @creation_tool_version = header[:creationtoolversion]
+      @seg_type              = header[:segtype]
+      @o_tmf                 = header[:"o-tmf"]
+      @admin_lang            = header[:adminlang]
+      @src_lang              = header[:srclang]
+      @data_type             = header[:datatype]
+
+      # optional attrs
+      @o_encoding            = header[:"o-encoding"]
+      @creation_date         = header[:creationdate]
+      @creation_id           = header[:creationid]
+      @change_date           = header[:changedate]
+      @change_id             = header[:changeid]
     end
 
     def can_contain?(element)

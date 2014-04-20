@@ -13,6 +13,19 @@ describe Konjak do
     subject { super().header }
 
     it { is_expected.to be_instance_of Konjak::Header }
+
+    its(:creation_tool)         { is_expected.to eq 'XYZTool' }
+    its(:creation_tool_version) { is_expected.to eq '1.01-023' }
+    its(:data_type)             { is_expected.to eq 'PlainText' }
+    its(:seg_type)              { is_expected.to eq 'sentence' }
+    its(:admin_lang)            { is_expected.to eq 'en-us' }
+    its(:src_lang)              { is_expected.to eq 'EN' }
+    its(:o_tmf)                 { is_expected.to eq 'ABCTransMem' }
+    its(:creation_date)         { is_expected.to eq '20020101T163812Z' }
+    its(:creation_id)           { is_expected.to eq 'ThomasJ' }
+    its(:change_date)           { is_expected.to eq '20020413T023401Z' }
+    its(:change_id)             { is_expected.to eq 'Amity' }
+    its(:o_encoding)            { is_expected.to eq 'iso-8859-1' }
   end
 
   describe 'body' do
