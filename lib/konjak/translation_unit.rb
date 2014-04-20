@@ -6,6 +6,9 @@ module Konjak
     attr_accessor :creation_id, :change_date, :seg_type, :change_id, :o_tmf
     attr_accessor :src_lang
 
+    def initialize(tu)
+    end
+
     def can_contain?(element)
       [Note, Property, TranslationUnitVariant].any? {|c| c === element }
     end

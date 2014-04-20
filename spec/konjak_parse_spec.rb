@@ -53,6 +53,13 @@ describe Konjak do
     subject { super().body }
 
     it { is_expected.to be_instance_of Konjak::Body }
+
+    describe '#translation_units' do
+      subject { super().translation_units }
+
+      its(:size) { is_expected.to eq 2 }
+      it { is_expected.to be_all {|tu| tu.instance_of? Konjak::TranslationUnit } }
+    end
   end
 end
 
