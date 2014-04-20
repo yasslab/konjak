@@ -27,21 +27,21 @@ describe Konjak do
     its(:change_id)             { is_expected.to eq 'Amity' }
     its(:o_encoding)            { is_expected.to eq 'iso-8859-1' }
 
-    describe '#notes' do
+    describe 'notes' do
       subject { super().notes }
 
       its(:size) { is_expected.to eq 1 }
       it { is_expected.to be_all {|n| n.instance_of? Konjak::Note } }
     end
 
-    describe '#user_defined_encodings' do
+    describe 'user_defined_encodings' do
       subject { super().user_defined_encodings }
 
       its(:size) { is_expected.to eq 1 }
       it { is_expected.to be_all {|n| n.instance_of? Konjak::UserDefinedEncoding } }
     end
 
-    describe '#properties' do
+    describe 'properties' do
       subject { super().properties }
 
       its(:size) { is_expected.to eq 1 }
@@ -54,7 +54,7 @@ describe Konjak do
 
     it { is_expected.to be_instance_of Konjak::Body }
 
-    describe '#translation_units' do
+    describe 'translation_units' do
       subject { super().translation_units }
 
       its(:size) { is_expected.to eq 2 }
