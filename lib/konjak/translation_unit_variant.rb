@@ -8,6 +8,9 @@ module Konjak
     attr_accessor :creation_tool, :creation_tool_version, :creation_date
     attr_accessor :creation_id, :change_date, :change_id, :o_tmf
 
+    def initialize(tuv)
+    end
+
     # FIXME
     #     Zero, one or more <note>, or <prop> elements in any order, followed by
     #     One <seg> element.

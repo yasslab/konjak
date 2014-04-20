@@ -6,12 +6,18 @@ module Konjak
     attr_accessor :creation_id, :change_date, :seg_type, :change_id, :o_tmf
     attr_accessor :src_lang
 
+    # children
+    attr_accessor :variants
+
     def initialize(tu)
       # attrs
       @tuid            = tu[:tuid]
       @data_type       = tu[:datatype]
       @usage_count     = tu[:usagecount]
       @last_usage_date = tu[:lastusagedate]
+
+      # children
+      @variants = tu.children.select {|c| c.name == 'tuv' }.map {|tuv| TranslationUnitVariant.new tuv }
     end
 
     def can_contain?(element)

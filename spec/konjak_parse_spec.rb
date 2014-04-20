@@ -67,6 +67,9 @@ describe Konjak do
         its(:data_type)       { is_expected.to eq 'Text' }
         its(:usage_count)     { is_expected.to eq '2' }
         its(:last_usage_date) { is_expected.to eq '19970314T023401Z' }
+
+        its('variants.size') { is_expected.to eq 2 }
+        its(:variants) { is_expected.to be_all {|tuv| tuv.instance_of? Konjak::TranslationUnitVariant  } }
       end
     end
   end
