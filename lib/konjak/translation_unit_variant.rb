@@ -9,6 +9,18 @@ module Konjak
     attr_accessor :creation_id, :change_date, :change_id, :o_tmf
 
     def initialize(tuv)
+      @xml_lang              = tuv['xml:lang']
+      @o_encoding            = tuv['o-encoding']
+      @data_type             = tuv['datatype']
+      @usage_count           = tuv['usagecount']
+      @last_usage_date       = tuv['lastusagedate']
+      @creation_tool         = tuv['creationtool']
+      @creation_tool_version = tuv['creationtoolversion']
+      @creation_date         = tuv['creationdate']
+      @creation_id           = tuv['creationid']
+      @change_date           = tuv['changedate']
+      @change_id             = tuv['changeid']
+      @o_tmf                 = tuv['o-tmf']
     end
 
     # FIXME

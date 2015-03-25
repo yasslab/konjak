@@ -122,6 +122,16 @@ describe Konjak do
 
         its('variants.size') { is_expected.to eq 2 }
         its(:variants) { is_expected.to be_all {|tuv| tuv.instance_of? Konjak::TranslationUnitVariant  } }
+
+        describe '.variants.last' do
+          subject { super().variants.last }
+
+          its(:xml_lang)      { is_expected.to eq 'FR-CA' }
+          its(:creation_date) { is_expected.to eq '19970309T021145Z' }
+          its(:creation_id)   { is_expected.to eq 'BobW' }
+          its(:change_date)   { is_expected.to eq '19970314T023401Z' }
+          its(:change_id)     { is_expected.to eq 'ManonD' }
+        end
       end
     end
   end
