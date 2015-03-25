@@ -32,6 +32,20 @@ describe Konjak do
 
       its(:size) { is_expected.to eq 1 }
       it { is_expected.to be_all {|n| n.instance_of? Konjak::Note } }
+
+      describe '.first' do
+        subject { super().first }
+
+        its(:xml_lang) { is_expected.to eq 'en' }
+        its(:o_encoding) { is_expected.to eq 'iso-8859-1' }
+        its(:text) { is_expected.to be_instance_of Konjak::Text }
+
+        describe 'text' do
+          subject { super().text }
+
+          its(:to_s) { is_expected.to eq 'This is a note at document level.' }
+        end
+      end
     end
 
     describe 'user_defined_encodings' do
@@ -94,7 +108,7 @@ changedate="20020413T023401Z"
 changeid="Amity"
 o-encoding="iso-8859-1"
 >
-<note>This is a note at document level.</note>
+<note xml:lang="en" o-encoding="iso-8859-1">This is a note at document level.</note>
 <prop type="RTFPreamble">{\rtf1\ansi\tag etc...{\fonttbl}</prop>
 <ude name="MacRoman" base="Macintosh">
  <map unicode="#xF8FF" code="#xF0" ent="Apple_logo" subst="[Apple]"/>
