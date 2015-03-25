@@ -8,6 +8,9 @@ module Konjak
     attr_accessor :creation_tool, :creation_tool_version, :creation_date
     attr_accessor :creation_id, :change_date, :change_id, :o_tmf
 
+    # children
+    attr_accessor :notes, :properties, :segment
+
     def initialize(tuv)
       @xml_lang              = tuv['xml:lang']
       @o_encoding            = tuv['o-encoding']
@@ -21,6 +24,10 @@ module Konjak
       @change_date           = tuv['changedate']
       @change_id             = tuv['changeid']
       @o_tmf                 = tuv['o-tmf']
+
+      @notes      = tuv.children.select {|c| c.name == 'note' }.map {|n| Note.new n }
+      @properties = tuv.children.select {|c| c.name == 'prop' }.map {|n| Property.new n }
+      @segment    = Segment.new(tuv.children.detect {|c| c.name == 'seg' })
     end
 
     # FIXME

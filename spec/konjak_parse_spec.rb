@@ -131,6 +131,12 @@ describe Konjak do
           its(:creation_id)   { is_expected.to eq 'BobW' }
           its(:change_date)   { is_expected.to eq '19970314T023401Z' }
           its(:change_id)     { is_expected.to eq 'ManonD' }
+
+          its(:notes) { is_expected.to be_all {|note| note.instance_of? Konjak::Note } }
+          its(:notes) { is_expected.to be_empty }
+          its(:properties) { is_expected.to be_all {|prop| prop.instance_of? Konjak::Property } }
+          its('properties.size') { is_expected.to eq 1 }
+          its(:segment) { is_expected.to be_instance_of Konjak::Segment }
         end
       end
     end
