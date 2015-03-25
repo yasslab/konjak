@@ -53,6 +53,20 @@ describe Konjak do
 
       its(:size) { is_expected.to eq 1 }
       it { is_expected.to be_all {|n| n.instance_of? Konjak::UserDefinedEncoding } }
+
+      describe '.first' do
+        subject { super().first }
+
+        its(:name) { is_expected.to eq 'MacRoman' }
+        its(:base) { is_expected.to eq 'Macintosh' }
+
+        describe '.map' do
+          subject { super().maps }
+
+          its(:size) { is_expected.to eq 1 }
+          it { is_expected.to be_all {|n| n.instance_of? Konjak::Map } }
+        end
+      end
     end
 
     describe 'properties' do
