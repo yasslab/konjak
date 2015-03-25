@@ -1,7 +1,11 @@
 module Konjak
   # container
   class Segment < StructuralElement
+    # children
+    attr_accessor :text
+
     def initialize(seg)
+      @text = Text.new(seg.text)
     end
 
     def can_contain?(element)

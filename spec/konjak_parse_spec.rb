@@ -137,6 +137,18 @@ describe Konjak do
           its(:properties) { is_expected.to be_all {|prop| prop.instance_of? Konjak::Property } }
           its('properties.size') { is_expected.to eq 1 }
           its(:segment) { is_expected.to be_instance_of Konjak::Segment }
+
+          describe '.segment' do
+            subject { super().segment }
+
+            its(:text) { is_expected.to be_instance_of Konjak::Text }
+
+            describe '.text' do
+              subject { super().text }
+
+              its(:to_s) { is_expected.to eq "donn\u00E9es (avec un caract\u00E8re non standard: \uF8FF)." }
+            end
+          end
         end
       end
     end
