@@ -6,7 +6,14 @@ module Konjak
     # optional attrs
     attr_accessor :xml_lang, :o_encoding
 
+    # child
+    attr_accessor :text
+
     def initialize(property)
+      @type       = property[:type]
+      @xml_lang   = property['xml:lang']
+      @o_encoding = property['o-encoding']
+      @text       = Text.new(property.text)
     end
 
     def can_contain?(element)
