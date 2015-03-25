@@ -65,6 +65,15 @@ describe Konjak do
 
           its(:size) { is_expected.to eq 1 }
           it { is_expected.to be_all {|n| n.instance_of? Konjak::Map } }
+
+          describe '.first' do
+            subject { super().first }
+
+            its(:unicode)      { is_expected.to eq '#xF8FF' }
+            its(:code)         { is_expected.to eq '#xF0' }
+            its(:entity)       { is_expected.to eq 'Apple_logo' }
+            its(:substitution) { is_expected.to eq '[Apple]' }
+          end
         end
       end
     end
