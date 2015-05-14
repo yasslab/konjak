@@ -1,9 +1,9 @@
 require 'spec_helper'
 
 describe Konjak do
-  let(:sample_doc) { File.read('spec/fixtures/sample.tmx') }
+  let(:sample_tmx) { File.read('spec/fixtures/sample.tmx') }
 
-  subject { Konjak.parse(sample_doc) }
+  subject { Konjak.parse(sample_tmx) }
 
   it { is_expected.to be_kind_of Konjak::Tmx }
 
