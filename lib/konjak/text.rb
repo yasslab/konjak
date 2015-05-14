@@ -7,5 +7,9 @@ module Konjak
     def to_s
       @text
     end
+
+    def length
+      @text.length
+    end
   end
 end

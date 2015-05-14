@@ -15,6 +15,7 @@ module Konjak
       @data_type       = tu[:datatype]
       @usage_count     = tu[:usagecount]
       @last_usage_date = tu[:lastusagedate]
+      @src_lang        = tu[:srclang]
 
       # children
       @variants = tu.children.select {|c| c.name == 'tuv' }.map {|tuv| TranslationUnitVariant.new tuv }

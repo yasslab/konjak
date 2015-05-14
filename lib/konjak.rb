@@ -31,10 +31,17 @@ require 'konjak/placeholder'
 require 'konjak/sub_flow'
 require 'konjak/unknown_tag'
 
+# translator
+require 'konjak/translator'
+
 module Konjak
   class << self
     def parse(xml)
       Parser.new.parse(xml)
+    end
+
+    def translate(doc, xml, src_lang, target_lang)
+      Translator.new(parse(xml), src_lang, target_lang).translate(doc)
     end
   end
 end
