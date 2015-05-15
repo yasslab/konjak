@@ -40,8 +40,9 @@ module Konjak
       Parser.new.parse(xml)
     end
 
-    def translate(doc, xml, src_lang, target_lang)
-      Translator.new(parse(xml), src_lang, target_lang).translate(doc)
+    def translate(doc, xml_or_tmx, src_lang, target_lang)
+      tmx = xml_or_tmx.kind_of?(Tmx) ? xml_or_tmx : parse(xml_or_tmx)
+      Translator.new(tmx, src_lang, target_lang).translate(doc)
     end
   end
 end

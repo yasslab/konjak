@@ -15,4 +15,13 @@ this is données (avec un caractère non standard: ).
 this is données (avec un caractère non standard: ).
 EXPECT
 
+  context 'when passed Tmx' do
+    subject { Konjak.translate(doc, Konjak.parse(sample_tmx), 'EN', 'FR-CA') }
+
+    it { is_expected.to eq <<EXPECT }
+this is données (avec un caractère non standard: ).
+this is données (avec un caractère non standard: ).
+EXPECT
+  end
+
 end
