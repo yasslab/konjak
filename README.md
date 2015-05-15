@@ -18,7 +18,7 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+    $ konjak translate file.tmx file.txt src target
 
 ## Contributing
 

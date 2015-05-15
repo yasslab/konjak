@@ -1,0 +1,16 @@
+#!/usr/bin/env ruby
+
+require 'konjak'
+
+if ARGV.size != 5 || ARGV[0] != 'translate'
+  puts <<USAGE
+usage: konjak translate file.tmx file.txt src target
+USAGE
+  exit 1
+end
+
+_, tmx_path, target_path, src, target = ARGV
+
+tmx = File.read(tmx_path)
+doc = File.read(target_path)
+puts Konjak.translate(doc, tmx, src, target)
