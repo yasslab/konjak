@@ -13,13 +13,30 @@ module Konjak
     end
 
     def translate(doc)
-      doc = doc.dup
+      translated_docs = [doc.dup]
       translation_units.each do |tu|
         s = tu.variants.detect { |v| v.xml_lang == src_lang }.segment.text.to_s
         t = tu.variants.detect { |v| v.xml_lang == target_lang }.segment.text.to_s
-        doc.gsub!(s, t)
+        translated_docs.map! { |d|
+          next d if d.respond_to?(:translated)
+          next d if !d.include?(s)
+
+          ds = []
+          tail = nil
+          loop do
+            head, match, tail = d.partition(s)
+            ds << head
+            ds << t.dup.tap {|t| def t.translated; true; end }
+
+            break unless tail.include?(s)
+
+            d = tail
+          end
+          ds << tail
+          ds
+        }.flatten!
       end
-      doc
+      translated_docs.join
     end
 
     private
