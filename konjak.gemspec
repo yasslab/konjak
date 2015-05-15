@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = Konjak::VERSION
   spec.authors       = ["Seiei Higa"]
   spec.email         = ["hanachin@gmail.com"]
-  spec.summary       = %q{TMX(Translation Memory XML) tools for ruby}
-  spec.description   = %q{TMX(Translation Memory XML) tools for ruby}
+  spec.summary       = %q{TMX(Translation Memory exChange) tools for ruby}
+  spec.description   = %q{TMX(Translation Memory exChange) tools for ruby}
   spec.homepage      = "https://github.com/hanachin/konjak"
   spec.license       = "MIT"
 

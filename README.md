@@ -1,6 +1,6 @@
 # Konjak
 
-TMX(Translation Memory XML) tools for ruby
+TMX(Translation Memory eXchange) tools for ruby
 
 ## Installation
 
