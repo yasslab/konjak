@@ -1,13 +1,8 @@
 require 'mem'
+require 'konjak/translator/translated_string'
 
 module Konjak
   class Translator
-    class TranslatedString < String
-      def translated?
-        true
-      end
-    end
-
     module Translate
       refine(String) do
         def translated?
