@@ -24,4 +24,21 @@ this is données (avec un caractère non standard: ).
 EXPECT
   end
 
+  context 'when format is GTT' do
+    let(:gtt_tmx) { Konjak.parse(File.read('spec/fixtures/gtt.tmx')) }
+
+    let(:doc) { <<GTT_HTML }
+This is <a href="http://example.com">example</a>.
+And This is <b>example</b>. Yey.
+And This is example.
+GTT_HTML
+
+    subject { Konjak.translate(doc, gtt_tmx, 'en', 'ja', format: :gtt_html) }
+
+    it { is_expected.to eq <<EXPECT }
+これは、 <a href="http://example.com">例</a> 。
+And これは、 <b>例</b> 。 Yey.
+And This is example.
+EXPECT
+  end
 end

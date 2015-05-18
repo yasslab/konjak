@@ -1,4 +1,5 @@
 require 'mem'
+require 'konjak/translator/gtt_html_translate'
 require 'konjak/translator/text_translate'
 require 'konjak/translator/translated_string'
 
@@ -36,11 +37,16 @@ module Konjak
     private
 
     TRANSLATE_ENVS= {
-      text:     Class.new { using TextTranslate; break binding }
+      text:     Class.new { using TextTranslate;    break binding },
+      gtt_html: Class.new { using GttHtmlTranslate; break binding }
     }
 
     def format
-      options[:format] || :text
+      if TRANSLATE_ENVS.has_key?(options[:format])
+        options[:format]
+      else
+        :text
+      end
     end
 
     def translate_env
