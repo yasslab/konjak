@@ -1,5 +1,7 @@
 # Konjak
 
+[![Build Status](https://travis-ci.org/hanachin/konjak.svg)](https://travis-ci.org/hanachin/konjak)
+
 TMX(Translation Memory eXchange) tools for ruby
 
 ## Installation
