@@ -1,6 +1,7 @@
 # Konjak
 
 [![Build Status](https://travis-ci.org/hanachin/konjak.svg)](https://travis-ci.org/hanachin/konjak)
+[![Code Climate](https://codeclimate.com/github/hanachin/konjak/badges/gpa.svg)](https://codeclimate.com/github/hanachin/konjak)
 
 TMX(Translation Memory eXchange) tools for ruby
 
