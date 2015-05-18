@@ -25,17 +25,18 @@ module Konjak
           end
 
           texts = []
-          tail = nil
           loop do
             head, match, tail = text.partition(s)
             texts << head
             texts << TranslatedString.new(t)
 
-            break unless tail.include?(s)
+            unless tail.include?(s)
+              texts << tail
+              break
+            end
 
             text = tail
           end
-          texts << tail
           texts
         end
       end
