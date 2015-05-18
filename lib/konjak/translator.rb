@@ -2,6 +2,22 @@ require 'mem'
 
 module Konjak
   class Translator
+    class TranslatedString < String
+      def translated?
+        true
+      end
+    end
+
+    module Translate
+      refine(String) do
+        def translated?
+          false
+        end
+      end
+    end
+
+    using Translate
+
     include Mem
 
     attr_reader :tmx, :src_lang, :target_lang
@@ -18,7 +34,7 @@ module Konjak
         s = tu.variant(src_lang).segment.text.to_s
         t = tu.variant(target_lang).segment.text.to_s
         translated_docs.map! { |d|
-          next d if d.respond_to?(:translated)
+          next d if d.translated?
           next d if !d.include?(s)
 
           ds = []
@@ -26,7 +42,7 @@ module Konjak
           loop do
             head, match, tail = d.partition(s)
             ds << head
-            ds << t.dup.tap {|t| def t.translated; true; end }
+            ds << TranslatedString.new(t)
 
             break unless tail.include?(s)
 
