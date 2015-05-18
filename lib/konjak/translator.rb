@@ -3,13 +3,7 @@ require 'konjak/translator/translated_string'
 
 module Konjak
   class Translator
-    module Translate
-      refine(String) do
-        def translated?
-          false
-        end
-      end
-
+    module TextTranslate
       refine(TranslationUnit) do
         def translate(src_lang, target_lang, text)
           s = variant(src_lang).segment.text
@@ -28,7 +22,7 @@ module Konjak
       end
     end
 
-    using Translate
+    using TextTranslate
 
     include Mem
 
@@ -44,7 +38,7 @@ module Konjak
       translated_docs = [doc.dup]
       translation_units.each do |tu|
         translated_docs.map! { |text|
-          next text if text.translated?
+          next text if text.is_a?(TranslatedString)
 
           tu.translate(src_lang, target_lang, text)
         }.flatten!
