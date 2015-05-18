@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<tmx version="1.4">
+<header creationtool="TMM" creationtoolversion="1.0" segtype="" o-tmf="" adminlang="" srclang="*all*" datatype=""/>
+<body>
+<tu tuid="T:en:ja:false:2040014087321606161:6682938220048076252:ja:13639662800514838096:en:;translation:REVIEWED:e2c10971e4aac54e:" creationtool="TMM" creationtoolversion="1.0" srclang="en">
+ <tuv xml:lang="en">
+   <seg>This is {0}example{/0}.</seg>
+ </tuv>
+ <tuv xml:lang="ja">
+   <seg>これは、 {0}例{/0} 。</seg>
+ </tuv>
+ <entry_metadata>
+   <tm_entry>
+     <source_info>
+       <source>This is {0}example{/0}.</source>
+       <source_lang>en</source_lang>
+     </source_info>
+     <translation_info status="REVIEWED">
+       <target_lang>ja</target_lang>
+       <tm_id>e2c10971e4aac54e</tm_id>
+     </translation_info>
+     <translation translator_id="560573848676" translation_timestamp="1431727112574000">
+       <translation_content>これは、 {0}例{/0} 。</translation_content>
+     </translation>
+   </tm_entry>
+   <context>rO0ABXVyAAJbQqzzF/gGCFTgAgAAeHAAAAAA</context>
+ </entry_metadata>
+ <translation_content_hash>beb0b69849aeabce9de9288dc8342565</translation_content_hash>
+ <entry_metadata_hash>9d8b6da8b9ad7c0d7234019e498b7121</entry_metadata_hash>
+</tu>
+<tu tuid="T:en:ja:false:8812459504862001208:7855750935865835385:ja:1953815444959955934:en:;translation:REVIEWED:e2c10971e4aac54e:" creationtool="TMM" creationtoolversion="1.0" srclang="en">
+ <tuv xml:lang="en">
+   <seg>
+
+&amp;amp; it&amp;#39;s also example.</seg>
+ </tuv>
+ <tuv xml:lang="ja">
+   <seg>
+
+＆それはまた、例です。</seg>
+ </tuv>
+ <entry_metadata>
+   <tm_entry>
+     <source_info>
+       <source>
+
+&amp;amp; it&amp;#39;s also example.</source>
+       <source_lang>en</source_lang>
+     </source_info>
+     <translation_info status="REVIEWED">
+       <target_lang>ja</target_lang>
+       <tm_id>e2c10971e4aac54e</tm_id>
+     </translation_info>
+     <translation translator_id="560573848676" translation_timestamp="1431728356543000">
+       <translation_content>
+
+＆それはまた、例です。</translation_content>
+     </translation>
+   </tm_entry>
+   <context>rO0ABXVyAAJbQqzzF/gGCFTgAgAAeHAAAAASChBUaGlzIGlzIGV4YW1wbGUu</context>
+ </entry_metadata>
+ <translation_content_hash>6f0afae9a7dfda8c90a75be0d392765e</translation_content_hash>
+ <entry_metadata_hash>7e5b6ab67076bbea9790c2031882cea8</entry_metadata_hash>
+</tu>
+<tu tuid="T:en:ja:false:2040014087321606161:6682938220048076252:ja:14373978183534318585:en:;translation:REVIEWED:e2c10971e4aac54e:" creationtool="TMM" creationtoolversion="1.0" srclang="en">
+ <tuv xml:lang="en">
+   <seg>This is {0}example{/0}.</seg>
+ </tuv>
+ <tuv xml:lang="ja">
+   <seg>これは、 {0}例{/0} 。</seg>
+ </tuv>
+ <entry_metadata>
+   <tm_entry>
+     <source_info>
+       <source>This is {0}example{/0}.</source>
+       <source_lang>en</source_lang>
+     </source_info>
+     <translation_info status="REVIEWED">
+       <target_lang>ja</target_lang>
+       <tm_id>e2c10971e4aac54e</tm_id>
+     </translation_info>
+     <translation translator_id="560573848676" translation_timestamp="1431728291642000">
+       <translation_content>これは、 {0}例{/0} 。</translation_content>
+     </translation>
+   </tm_entry>
+   <context>rO0ABXVyAAJbQqzzF/gGCFTgAgAAeHAAAAAYEhYKCiYgaXQncyBhbHNvIGV4YW1wbGUu</context>
+ </entry_metadata>
+ <translation_content_hash>beb0b69849aeabce9de9288dc8342565</translation_content_hash>
+ <entry_metadata_hash>ba7b0252962332aad36a9b14d6184121</entry_metadata_hash>
+</tu>
+</body>
+</tmx>

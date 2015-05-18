@@ -36,8 +36,8 @@ require 'konjak/translator'
 
 module Konjak
   class << self
-    def parse(xml)
-      Parser.new.parse(xml)
+    def parse(xml, **kw)
+      Parser.new.parse(xml, **kw)
     end
 
     def translate(doc, xml_or_tmx, src_lang, target_lang)
