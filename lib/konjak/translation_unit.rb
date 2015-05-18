@@ -30,6 +30,18 @@ module Konjak
       child_elements.count {|e| TranslationUnitVariant === e } >= 2
     end
 
+    def has_translation?(src_lang, target_lang)
+      src_lang?(src_lang) && has_variant_lang?(src_lang) && has_variant_lang?(target_lang)
+    end
+
+    def src_lang?(src_lang)
+      !self.src_lang || self.src_lang == '*all*' || self.src_lang == src_lang
+    end
+
+    def has_variant_lang?(lang)
+      variants.any? {|v| v.xml_lang == lang }
+    end
+
     # FIXME
     #     Zero, one or more <note>, or <prop> elements in any order, followed by
     #     One or more <tuv> elements.

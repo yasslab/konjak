@@ -43,9 +43,7 @@ module Konjak
 
     def translation_units
       tmx.body.translation_units.select { |tu|
-        (!tu.src_lang || tu.src_lang == src_lang || tu.src_lang == '*all*') &&
-        tu.variants.any? {|v| v.xml_lang == src_lang } &&
-        tu.variants.any? {|v| v.xml_lang == target_lang }
+        tu.has_translation?(src_lang, target_lang)
       }.sort_by {|tu|
         -tu.variants.detect { |v| v.xml_lang == src_lang }.segment.text.length
       }
