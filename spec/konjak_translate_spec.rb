@@ -8,7 +8,7 @@ this is data (with a non-standard character: ).
 this is data (with a non-standard character: ).
 DOC
 
-  subject { Konjak.translate(doc, sample_tmx, 'EN', 'FR-CA') }
+  subject { Konjak.translate(doc, sample_tmx, 'EN', 'FR-CA').join }
 
   it { is_expected.to eq <<EXPECT }
 this is données (avec un caractère non standard: ).
@@ -16,7 +16,7 @@ this is données (avec un caractère non standard: ).
 EXPECT
 
   context 'when passed Tmx' do
-    subject { Konjak.translate(doc, Konjak.parse(sample_tmx), 'EN', 'FR-CA') }
+    subject { Konjak.translate(doc, Konjak.parse(sample_tmx), 'EN', 'FR-CA').join }
 
     it { is_expected.to eq <<EXPECT }
 this is données (avec un caractère non standard: ).
@@ -33,7 +33,7 @@ And This is <b>example</b>. Yey.
 And This is example.
 GTT_HTML
 
-    subject { Konjak.translate(doc, gtt_tmx, 'en', 'ja', format: :gtt_html) }
+    subject { Konjak.translate(doc, gtt_tmx, 'en', 'ja', format: :gtt_html).join }
 
     it { is_expected.to eq <<EXPECT }
 これは、 <a href="http://example.com">例</a> 。

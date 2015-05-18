@@ -31,7 +31,7 @@ module Konjak
           eval('tu.translate(src_lang, target_lang, text)', env)
         }.flatten!
       end
-      translated_docs.join
+      translated_docs
     end
 
     private

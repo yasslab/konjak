@@ -13,4 +13,4 @@ _command, src, target, tmx_path, target_path = ARGV
 
 tmx = File.read(tmx_path)
 doc = File.read(target_path)
-puts Konjak.translate(doc, Konjak.parse(tmx, gtt: true), src, target, format: :gtt_html)
+puts Konjak.translate(doc, Konjak.parse(tmx, gtt: true), src, target, format: :gtt_html).join
