@@ -4,12 +4,12 @@ require 'konjak'
 
 if ARGV.size != 5 || ARGV[0] != 'translate'
   puts <<USAGE
-usage: konjak translate file.tmx file.txt src target
+usage: konjak translate src target file.tmx file.txt
 USAGE
   exit 1
 end
 
-_, tmx_path, target_path, src, target = ARGV
+_command, src, target, tmx_path, target_path = ARGV
 
 tmx = File.read(tmx_path)
 doc = File.read(target_path)
