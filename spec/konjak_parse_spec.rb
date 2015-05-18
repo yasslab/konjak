@@ -162,7 +162,7 @@ describe Konjak do
   describe 'gtt' do
     let(:xml) { File.read('spec/fixtures/gtt.tmx') }
 
-    subject { tmx.body.translation_units.detect {|tu| tu.variants.detect {|v| v.segment.text.to_s == "\n\n& it's also example." } } }
+    subject { tmx.body.translation_units.detect {|tu| tu.variants.detect {|v| v.segment.text == "\n\n& it's also example." } } }
 
     context 'gtt: true' do
       let(:tmx) { Konjak.parse(xml, gtt: true) }

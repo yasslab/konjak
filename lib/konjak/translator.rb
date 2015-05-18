@@ -17,8 +17,8 @@ module Konjak
 
       refine(TranslationUnit) do
         def translate(src_lang, target_lang, text)
-          s = variant(src_lang).segment.text.to_s
-          t = variant(target_lang).segment.text.to_s
+          s = variant(src_lang).segment.text
+          t = variant(target_lang).segment.text
 
           texts = []
           while true
