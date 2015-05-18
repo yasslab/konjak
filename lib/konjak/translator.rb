@@ -21,7 +21,7 @@ module Konjak
           t = variant(target_lang).segment.text.to_s
 
           unless text.include?(s)
-            return text
+            return [text]
           end
 
           texts = []
