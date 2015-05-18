@@ -20,24 +20,15 @@ module Konjak
           s = variant(src_lang).segment.text.to_s
           t = variant(target_lang).segment.text.to_s
 
-          unless text.include?(s)
-            return [text]
-          end
-
           texts = []
-          loop do
+          while true
             head, match, tail = text.partition(s)
-            texts << head
+            break if match.empty?
+            texts << head unless head.empty?
             texts << TranslatedString.new(t)
-
-            unless tail.include?(s)
-              texts << tail
-              break
-            end
-
             text = tail
           end
-          texts
+          texts << text
         end
       end
     end
