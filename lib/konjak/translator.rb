@@ -14,6 +14,31 @@ module Konjak
           false
         end
       end
+
+      refine(TranslationUnit) do
+        def translate(src_lang, target_lang, text)
+          s = variant(src_lang).segment.text.to_s
+          t = variant(target_lang).segment.text.to_s
+
+          unless text.include?(s)
+            return text
+          end
+
+          texts = []
+          tail = nil
+          loop do
+            head, match, tail = text.partition(s)
+            texts << head
+            texts << TranslatedString.new(t)
+
+            break unless tail.include?(s)
+
+            text = tail
+          end
+          texts << tail
+          texts
+        end
+      end
     end
 
     using Translate
@@ -31,25 +56,10 @@ module Konjak
     def translate(doc)
       translated_docs = [doc.dup]
       translation_units.each do |tu|
-        s = tu.variant(src_lang).segment.text.to_s
-        t = tu.variant(target_lang).segment.text.to_s
-        translated_docs.map! { |d|
-          next d if d.translated?
-          next d if !d.include?(s)
+        translated_docs.map! { |text|
+          next text if text.translated?
 
-          ds = []
-          tail = nil
-          loop do
-            head, match, tail = d.partition(s)
-            ds << head
-            ds << TranslatedString.new(t)
-
-            break unless tail.include?(s)
-
-            d = tail
-          end
-          ds << tail
-          ds
+          tu.translate(src_lang, target_lang, text)
         }.flatten!
       end
       translated_docs.join
