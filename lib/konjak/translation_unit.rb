@@ -42,6 +42,10 @@ module Konjak
       variants.any? {|v| v.xml_lang == lang }
     end
 
+    def variant(lang)
+      variants.detect {|v| v.xml_lang == lang }
+    end
+
     # FIXME
     #     Zero, one or more <note>, or <prop> elements in any order, followed by
     #     One or more <tuv> elements.

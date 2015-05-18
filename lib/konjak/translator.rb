@@ -15,8 +15,8 @@ module Konjak
     def translate(doc)
       translated_docs = [doc.dup]
       translation_units.each do |tu|
-        s = tu.variants.detect { |v| v.xml_lang == src_lang }.segment.text.to_s
-        t = tu.variants.detect { |v| v.xml_lang == target_lang }.segment.text.to_s
+        s = tu.variant(src_lang).segment.text.to_s
+        t = tu.variant(target_lang).segment.text.to_s
         translated_docs.map! { |d|
           next d if d.respond_to?(:translated)
           next d if !d.include?(s)
@@ -45,7 +45,7 @@ module Konjak
       tmx.body.translation_units.select { |tu|
         tu.has_translation?(src_lang, target_lang)
       }.sort_by {|tu|
-        -tu.variants.detect { |v| v.xml_lang == src_lang }.segment.text.length
+        -tu.variant(src_lang).segment.text.length
       }
     end
     memoize :translation_units
