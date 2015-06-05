@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["hanachin@gmail.com"]
   spec.summary       = %q{TMX(Translation Memory exChange) tools for ruby}
   spec.description   = %q{TMX(Translation Memory exChange) tools for ruby}
-  spec.homepage      = "https://github.com/hanachin/konjak"
+  spec.homepage      = "https://github.com/yasslab/konjak"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")
