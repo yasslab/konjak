@@ -37,11 +37,11 @@ require 'konjak/translator'
 module Konjak
   class << self
     def parse(xml, **options)
-      Parser.new.parse(xml, **options)
+      Parser.new(**options).parse(xml)
     end
 
     def translate(doc, xml_or_tmx, src_lang, target_lang, **options)
-      tmx = xml_or_tmx.kind_of?(Tmx) ? xml_or_tmx : parse(xml_or_tmx)
+      tmx = xml_or_tmx.kind_of?(Tmx) ? xml_or_tmx : parse(xml_or_tmx, **options)
       Translator.new(tmx, src_lang, target_lang, **options).translate(doc)
     end
   end

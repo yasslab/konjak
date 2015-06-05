@@ -2,7 +2,13 @@ require 'nokogiri'
 
 module Konjak
   class Parser
-    def parse(xml, gtt: false)
+    attr_accessor :gtt
+
+    def initialize(gtt: false)
+      @gtt = gtt
+    end
+
+    def parse(xml)
       if gtt
         # FIXME
         xml = xml.gsub(/&amp;(#\d+|#x[0-9a-fA-F]+|[0-9a-zA-Z]+);/) { "&#{$1};" }
