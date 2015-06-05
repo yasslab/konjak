@@ -4,6 +4,8 @@ module Konjak
     attr_accessor :translation_units
 
     def initialize(body)
+      super
+
       @translation_units = body.children.select {|c| c.name == 'tu' }.map {|tu| TranslationUnit.new tu }
     end
 

@@ -7,6 +7,8 @@ module Konjak
     attr_accessor :text
 
     def initialize(note)
+      super
+
       @xml_lang   = note["xml:lang"]
       @o_encoding = note["o-encoding"]
       @text       = Text.new(note.text)

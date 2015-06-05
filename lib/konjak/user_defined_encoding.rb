@@ -12,6 +12,8 @@ module Konjak
     attr_accessor :maps
 
     def initialize(ude)
+      super
+
       @name = ude[:name]
       @base = ude[:base]
       @maps = ude.children.select {|c| c.name == 'map' }.map {|n| Map.new n }

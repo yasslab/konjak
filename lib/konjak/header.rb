@@ -10,6 +10,8 @@ module Konjak
     attr_accessor :notes, :user_defined_encodings, :properties
 
     def initialize(header)
+      super
+
       # required attrs
       @creation_tool         = header[:creationtool]
       @creation_tool_version = header[:creationtoolversion]

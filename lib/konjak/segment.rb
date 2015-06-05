@@ -5,6 +5,8 @@ module Konjak
     attr_accessor :text
 
     def initialize(seg)
+      super
+
       @text = Text.new(seg.text)
     end
 

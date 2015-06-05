@@ -4,9 +4,12 @@ module Konjak
     attr_accessor :version
 
     def initialize(tmx)
-      @version = tmx[:version]
+      super
+
+      @version = tmx.root[:version]
       # TODO - better error handling
-      @header, @body = tmx.children
+      @header = tmx.root.at_xpath('header')
+      @body = tmx.root.at_xpath('body')
     end
 
     def header

@@ -10,6 +10,8 @@ module Konjak
     attr_accessor :variants
 
     def initialize(tu)
+      super
+
       # attrs
       @tuid            = tu[:tuid]
       @data_type       = tu[:datatype]

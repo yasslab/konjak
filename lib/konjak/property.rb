@@ -10,6 +10,8 @@ module Konjak
     attr_accessor :text
 
     def initialize(property)
+      super
+
       @type       = property[:type]
       @xml_lang   = property['xml:lang']
       @o_encoding = property['o-encoding']

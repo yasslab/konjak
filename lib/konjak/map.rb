@@ -7,6 +7,8 @@ module Konjak
     attr_accessor :code, :entity, :substitution
 
     def initialize(map)
+      super
+
       @unicode      = map[:unicode]
       @code         = map[:code]
       @entity       = map[:ent]

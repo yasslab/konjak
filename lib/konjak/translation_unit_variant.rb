@@ -12,6 +12,8 @@ module Konjak
     attr_accessor :notes, :properties, :segment
 
     def initialize(tuv)
+      super
+
       @xml_lang              = tuv['xml:lang']
       @o_encoding            = tuv['o-encoding']
       @data_type             = tuv['datatype']
