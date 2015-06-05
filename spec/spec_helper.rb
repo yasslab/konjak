@@ -4,5 +4,6 @@ if ENV['CODECLIMATE_REPO_TOKEN']
 end
 
 require 'konjak'
+require 'pry'
 
 # spec/fixtures/sample.tmx from http://www.ttt.org/oscarstandards/tmx/#AppSample
