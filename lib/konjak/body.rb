@@ -1,14 +1,11 @@
 module Konjak
   class Body < StructuralElement
-    # children
-    attr_accessor :translation_units
-
-    def initialize(body)
-      super
-
-      @translation_units = body.children.select {|c| c.name == 'tu' }.map {|tu| TranslationUnit.new tu }
+    # childrens
+    def translation_units
+      children.select {|c| c.name == 'tu' }.map {|tu| TranslationUnit.new(tu) }
     end
 
+    # methods
     def can_contain?(element)
       TranslationUnit === element
     end

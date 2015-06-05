@@ -1,23 +1,18 @@
 module Konjak
   class Tmx < StructuralElement
-    # required attrs
-    attr_accessor :version
-
-    def initialize(tmx)
-      super
-
-      @version = tmx.root[:version]
-      # TODO - better error handling
-      @header = tmx.root.at_xpath('header')
-      @body = tmx.root.at_xpath('body')
+    # required attr
+    def version
+      root[:version]
     end
 
+    # required element
     def header
-      Header.new @header
+      Header.new(root.at_xpath('header'))
     end
 
+    # required element
     def body
-      Body.new @body
+      Body.new(root.at_xpath('body'))
     end
 
     # FIXME

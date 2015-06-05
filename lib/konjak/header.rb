@@ -1,39 +1,35 @@
 module Konjak
   class Header < StructuralElement
     # required attrs
-    attr_accessor :creation_tool, :creation_tool_version, :seg_type, :o_tmf, :admin_lang, :src_lang, :data_type
+    tmx_attr_accessor(:creation_tool,         :creationtool,        required: true)
+    tmx_attr_accessor(:creation_tool_version, :creationtoolversion, required: true)
+    tmx_attr_accessor(:seg_type,              :segtype,             required: true)
+    tmx_attr_accessor(:o_tmf,                 :"o-tmf",             required: true)
+    tmx_attr_accessor(:admin_lang,            :adminlang,           required: true)
+    tmx_attr_accessor(:src_lang,              :srclang,             required: true)
+    tmx_attr_accessor(:data_type,             :datatype,            required: true)
 
     # optional attrs
-    attr_accessor :o_encoding, :creation_date, :creation_id, :change_date, :change_id
+    tmx_attr_accessor(:o_encoding,    :"o-encoding")
+    tmx_attr_accessor(:creation_date, :creationdate)
+    tmx_attr_accessor(:creation_id,   :creationid)
+    tmx_attr_accessor(:change_date,   :changedate)
+    tmx_attr_accessor(:change_id,     :changeid)
 
-    # children
-    attr_accessor :notes, :user_defined_encodings, :properties
-
-    def initialize(header)
-      super
-
-      # required attrs
-      @creation_tool         = header[:creationtool]
-      @creation_tool_version = header[:creationtoolversion]
-      @seg_type              = header[:segtype]
-      @o_tmf                 = header[:"o-tmf"]
-      @admin_lang            = header[:adminlang]
-      @src_lang              = header[:srclang]
-      @data_type             = header[:datatype]
-
-      # optional attrs
-      @o_encoding    = header[:"o-encoding"]
-      @creation_date = header[:creationdate]
-      @creation_id   = header[:creationid]
-      @change_date   = header[:changedate]
-      @change_id     = header[:changeid]
-
-      # children
-      @notes                  = header.children.select {|c| c.name == 'note' }.map {|n| Note.new n }
-      @user_defined_encodings = header.children.select {|c| c.name == 'ude' }.map {|n| UserDefinedEncoding.new n }
-      @properties             = header.children.select {|c| c.name == 'prop' }.map {|n| Property.new n }
+    # childrens
+    def notes
+      children.select {|c| c.name == 'note' }.map {|n| Note.new(n) }
     end
 
+    def user_defined_encodings
+      children.select {|c| c.name == 'ude' }.map {|n| UserDefinedEncoding.new(n) }
+    end
+
+    def properties
+      children.select {|c| c.name == 'prop' }.map {|n| Property.new(n) }
+    end
+
+    # methods
     def can_contain?(element)
       [Note, UserDefinedEncoding, Property].any? {|c| c === element }
     end

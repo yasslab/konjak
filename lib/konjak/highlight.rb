@@ -1,7 +1,10 @@
 module Konjak
   class Hilight < InlineElement
     # optional attrs
-    attr_accessor :x, :type
+    tmx_attr_accessor(:x)
+    tmx_attr_accessor(:type)
+
+    # methods
 
     # FIXME
     #     Text data,

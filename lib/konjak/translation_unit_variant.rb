@@ -1,36 +1,35 @@
 module Konjak
   class TranslationUnitVariant < StructuralElement
     # required attrs
-    attr_accessor :xml_lang
+    tmx_attr_accessor(:xml_lang, :'xml:lang', required: true)
 
     # optional attrs
-    attr_accessor :o_encoding, :data_type, :usage_count, :last_usage_date
-    attr_accessor :creation_tool, :creation_tool_version, :creation_date
-    attr_accessor :creation_id, :change_date, :change_id, :o_tmf
+    tmx_attr_accessor(:o_encoding,            :"o-encoding")
+    tmx_attr_accessor(:data_type,             :datatype)
+    tmx_attr_accessor(:usage_count,           :usagecount)
+    tmx_attr_accessor(:last_usage_date,       :lastusagedate)
+    tmx_attr_accessor(:creation_tool,         :creationtool)
+    tmx_attr_accessor(:creation_tool_version, :creationtoolversion)
+    tmx_attr_accessor(:creation_date,         :creationdate)
+    tmx_attr_accessor(:creation_id,           :creationid)
+    tmx_attr_accessor(:change_date,           :changedate)
+    tmx_attr_accessor(:change_id,             :changeid)
+    tmx_attr_accessor(:o_tmf,                 :"o-tmf")
 
-    # children
-    attr_accessor :notes, :properties, :segment
-
-    def initialize(tuv)
-      super
-
-      @xml_lang              = tuv['xml:lang']
-      @o_encoding            = tuv['o-encoding']
-      @data_type             = tuv['datatype']
-      @usage_count           = tuv['usagecount']
-      @last_usage_date       = tuv['lastusagedate']
-      @creation_tool         = tuv['creationtool']
-      @creation_tool_version = tuv['creationtoolversion']
-      @creation_date         = tuv['creationdate']
-      @creation_id           = tuv['creationid']
-      @change_date           = tuv['changedate']
-      @change_id             = tuv['changeid']
-      @o_tmf                 = tuv['o-tmf']
-
-      @notes      = tuv.children.select {|c| c.name == 'note' }.map {|n| Note.new n }
-      @properties = tuv.children.select {|c| c.name == 'prop' }.map {|n| Property.new n }
-      @segment    = Segment.new(tuv.children.detect {|c| c.name == 'seg' })
+    # childrens
+    def notes
+      children.select {|c| c.name == 'note' }.map {|n| Note.new(n) }
     end
+
+    def properties
+      children.select {|c| c.name == 'prop' }.map {|n| Property.new(n) }
+    end
+
+    def segment
+      Segment.new(children.detect {|c| c.name == 'seg' })
+    end
+
+    # methods
 
     # FIXME
     #     Zero, one or more <note>, or <prop> elements in any order, followed by

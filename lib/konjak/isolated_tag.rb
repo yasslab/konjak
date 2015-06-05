@@ -1,11 +1,13 @@
 module Konjak
   class IsolatedTag < InlineElement
     # required attrs
-    attr_accessor :pos
+    tmx_attr_accessor(:pos, required: true)
 
     # optional attrs
-    attr_accessor :x, :type
+    tmx_attr_accessor(:x)
+    tmx_attr_accessor(:type)
 
+    # methods
     def can_contain?(element)
       CodeData === element || SubFlow === element
     end

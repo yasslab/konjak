@@ -1,7 +1,10 @@
 module Konjak
   class SubFlow < InlineElement
     # optional attrs
-    attr_accessor :data_type, :type
+    tmx_attr_accessor(:data_type, :datatype)
+    tmx_attr_accessor(:type)
+
+    #methods
 
     # FIXME
     #    Text data,

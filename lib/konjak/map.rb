@@ -1,19 +1,14 @@
 module Konjak
   class Map < StructuralElement
     # required attrs
-    attr_accessor :unicode
+    tmx_attr_accessor(:unicode, required: true)
 
     # optional attrs
-    attr_accessor :code, :entity, :substitution
+    tmx_attr_accessor(:code)
+    tmx_attr_accessor(:entity,       :ent)
+    tmx_attr_accessor(:substitution, :subst)
 
-    def initialize(map)
-      super
-
-      @unicode      = map[:unicode]
-      @code         = map[:code]
-      @entity       = map[:ent]
-      @substitution = map[:subst]
-    end
+    # methods
 
     # FIXME:
     #     code, ent and subst. At least one of these attributes should be specified.

@@ -1,35 +1,35 @@
 module Konjak
   class TranslationUnit < StructuralElement
     # optional attrs
-    attr_accessor :tuid, :o_encoding, :data_type, :usage_count, :last_usage_date
-    attr_accessor :creation_tool, :creation_tool_version, :creation_date
-    attr_accessor :creation_id, :change_date, :seg_type, :change_id, :o_tmf
-    attr_accessor :src_lang
+    tmx_attr_accessor(:tuid)
+    tmx_attr_accessor(:o_encoding,            :"o-encoding")
+    tmx_attr_accessor(:data_type,             :datatype)
+    tmx_attr_accessor(:usage_count,           :usagecount)
+    tmx_attr_accessor(:last_usage_date,       :lastusagedate)
+    tmx_attr_accessor(:src_lang,              :srclang)
+    tmx_attr_accessor(:creation_tool,         :creationtool)
+    tmx_attr_accessor(:creation_tool_version, :creationtoolversion)
+    tmx_attr_accessor(:creation_date,         :creationdate)
+    tmx_attr_accessor(:creation_id,           :creationid)
+    tmx_attr_accessor(:change_date,           :changedate)
+    tmx_attr_accessor(:seg_type,              :segtype)
+    tmx_attr_accessor(:change_id,             :changeid)
+    tmx_attr_accessor(:o_tmf,                 :"o-tmf")
+    tmx_attr_accessor(:src_lang,              :srclang)
 
-    # children
-    attr_accessor :variants
-
-    def initialize(tu)
-      super
-
-      # attrs
-      @tuid            = tu[:tuid]
-      @data_type       = tu[:datatype]
-      @usage_count     = tu[:usagecount]
-      @last_usage_date = tu[:lastusagedate]
-      @src_lang        = tu[:srclang]
-
-      # children
-      @variants = tu.children.select {|c| c.name == 'tuv' }.map {|tuv| TranslationUnitVariant.new tuv }
+    # childrens
+    def variants
+      children.select {|c| c.name == 'tuv' }.map {|tuv| TranslationUnitVariant.new(tuv) }
     end
 
+    # methods
     def can_contain?(element)
       [Note, Property, TranslationUnitVariant].any? {|c| c === element }
     end
 
     # Logically, a complete translation-memory database will contain at least two <tuv> elements in each translation unit.
     def complete?
-      child_elements.count {|e| TranslationUnitVariant === e } >= 2
+      variants.count >= 2
     end
 
     def has_translation?(src_lang, target_lang)
@@ -52,7 +52,7 @@ module Konjak
     #     Zero, one or more <note>, or <prop> elements in any order, followed by
     #     One or more <tuv> elements.
     def valid?
-      child_elements.count {|e| TranslationUnitVariant === e } >= 1
+      variants.count >= 1
     end
   end
 end

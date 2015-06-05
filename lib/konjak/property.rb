@@ -1,23 +1,18 @@
 module Konjak
   class Property < StructuralElement
     # required attrs
-    attr_accessor :type
+    tmx_attr_accessor(:type, required: true)
 
     # optional attrs
-    attr_accessor :xml_lang, :o_encoding
+    tmx_attr_accessor(:xml_lang,   :'xml:lang')
+    tmx_attr_accessor(:o_encoding, :"o-encoding")
 
-    # child
-    attr_accessor :text
-
-    def initialize(property)
-      super
-
-      @type       = property[:type]
-      @xml_lang   = property['xml:lang']
-      @o_encoding = property['o-encoding']
-      @text       = Text.new(property.text)
+    # childrens
+    def text
+      Text.new(super)
     end
 
+    # methods
     def can_contain?(element)
       # FIXME
       #    Tool-specific data or text.

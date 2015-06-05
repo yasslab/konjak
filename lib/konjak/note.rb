@@ -1,19 +1,15 @@
 module Konjak
   class Note < StructuralElement
     # optional attrs
-    attr_accessor :xml_lang, :o_encoding
+    tmx_attr_accessor(:xml_lang,   :'xml:lang')
+    tmx_attr_accessor(:o_encoding, :"o-encoding")
 
-    # text
-    attr_accessor :text
-
-    def initialize(note)
-      super
-
-      @xml_lang   = note["xml:lang"]
-      @o_encoding = note["o-encoding"]
-      @text       = Text.new(note.text)
+    # childrens
+    def text
+      Text.new(super)
     end
 
+    # methods
     def can_contain?(element)
       Text === element
     end
