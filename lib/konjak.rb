@@ -34,6 +34,10 @@ require 'konjak/unknown_tag'
 # translator
 require 'konjak/translator'
 
+# source
+require 'konjak/source'
+require 'konjak/html_source'
+
 module Konjak
   class << self
     def parse(xml, **options)
