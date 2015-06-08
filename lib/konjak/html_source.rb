@@ -7,8 +7,8 @@ module Konjak
         size = segments.size
 
         segments_patterns = [
-          %r{<(?<start>p|h1|h2|h3|h4|h5|h6|li|title)>(.*?)</\k<start>>}m,
-          %r{<(?<start>p|h1|h2|h3|h4|h5|h6|li|title) [^>]*?>(.*?)</\k<start>>}m,
+          %r{<(?<start>p|h1|h2|h3|h4|h5|h6|li|title|td)>(.*?)</\k<start>>}m,
+          %r{<(?<start>p|h1|h2|h3|h4|h5|h6|li|title|td) [^>]*?>(.*?)</\k<start>>}m,
           %r{<div>(.*?)</div>}m,
           %r{<div [^>]*?>(.*?)</div>}m
         ]
