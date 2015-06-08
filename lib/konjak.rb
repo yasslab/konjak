@@ -37,6 +37,7 @@ require 'konjak/translator'
 # source
 require 'konjak/source'
 require 'konjak/html_source'
+require 'konjak/polytex_source'
 
 module Konjak
   class << self
