@@ -1,5 +1,5 @@
 module Konjak
-  class HtmlSource < Source
+  class HtmlSegmentor < Segmentor
     def segments
       segments = [content.dup]
 

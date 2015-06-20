@@ -1,5 +1,5 @@
 module Konjak
-  class PolytexSource < Source
+  class PolytexSegmentor < Segmentor
     def segments
       segments = [content.dup]
 

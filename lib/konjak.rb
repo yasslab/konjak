@@ -34,10 +34,10 @@ require 'konjak/unknown_tag'
 # translator
 require 'konjak/translator'
 
-# source
-require 'konjak/source'
-require 'konjak/html_source'
-require 'konjak/polytex_source'
+# segmentor
+require 'konjak/segmentor'
+require 'konjak/html_segmentor'
+require 'konjak/polytex_segmentor'
 
 module Konjak
   class << self

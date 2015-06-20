@@ -1,5 +1,5 @@
 module Konjak
-  class Source
+  class Segmentor
     attr_accessor :content
 
     def initialize(content)
