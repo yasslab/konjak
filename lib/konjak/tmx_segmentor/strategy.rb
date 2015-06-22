@@ -7,9 +7,10 @@ module Konjak
     class Strategy
       include Mem
 
-      def initialize(tmx, lang)
+      def initialize(tmx, lang, options = {})
         @tmx = tmx
         @lang = lang
+        @options = default_options.merge(options)
       end
 
       def segmentize(text)
@@ -26,9 +27,19 @@ module Konjak
 
       private
 
+      def default_options
+        {min_segment_length: 10}
+      end
+
+      def min_segment_length
+        @options[:min_segment_length]
+      end
+
       def translation_units
         @tmx.body.translation_units.sort_by {|tu|
           -tu.variant(@lang).segment.text.length
+        }.reject {|tu|
+          tu.variant(@lang).segment.text.length < min_segment_length
         }
       end
       memoize :translation_units
