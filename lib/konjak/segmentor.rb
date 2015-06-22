@@ -1,9 +1,10 @@
 module Konjak
   class Segmentor
-    attr_accessor :content
+    attr_accessor :content, :options
 
-    def initialize(content)
+    def initialize(content, options)
       @content = content
+      @options = options
     end
   end
 end

@@ -38,6 +38,7 @@ require 'konjak/translator'
 require 'konjak/segmentor'
 require 'konjak/html_segmentor'
 require 'konjak/polytex_segmentor'
+require 'konjak/tmx_segmentor'
 
 module Konjak
   class << self

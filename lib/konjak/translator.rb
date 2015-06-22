@@ -1,7 +1,5 @@
 require 'mem'
-require 'konjak/translator/gtt_html_translate'
-require 'konjak/translator/text_translate'
-require 'konjak/translator/translated_string'
+require 'konjak/tmx_segmentor'
 
 module Konjak
   class Translator
@@ -17,49 +15,24 @@ module Konjak
       @options     = options
     end
 
-    def translate(doc)
-      translated_docs = [doc.dup]
-      translation_units.each do |tu|
-        translated_docs.map! { |text|
-          next text if text.is_a?(TranslatedString)
-
-          env = translate_env.dup
-          env.local_variable_set(:tu, tu)
-          env.local_variable_set(:src_lang, src_lang)
-          env.local_variable_set(:target_lang, target_lang)
-          env.local_variable_set(:text, text)
-          eval('tu.translate(src_lang, target_lang, text)', env)
-        }.flatten!
+    def translate(content)
+      segmentor(content).segments.map do |text|
+        next text unless text.is_a?(TmxSegmentor::SegmentString)
+        source_segment = text.segment
+        target_segment = source_segment.translation_unit.variant(target_lang).segment
+        target_segment.interpolate_gtt_tags(source_segment.gtt_tags(text))
       end
-      translated_docs
     end
 
     private
 
-    TRANSLATE_ENVS= {
-      text:     Class.new { using TextTranslate;    break binding },
-      gtt_html: Class.new { using GttHtmlTranslate; break binding }
-    }
-
-    def format
-      if TRANSLATE_ENVS.has_key?(options[:format])
-        options[:format]
-      else
-        :text
-      end
+    def segmentor(content)
+      TmxSegmentor.new(
+        content,
+        tmx: tmx,
+        lang: src_lang,
+        format: options[:format]
+      )
     end
-
-    def translate_env
-      TRANSLATE_ENVS[format]
-    end
-
-    def translation_units
-      tmx.body.translation_units.select { |tu|
-        tu.has_translation?(src_lang, target_lang)
-      }.sort_by {|tu|
-        -tu.variant(src_lang).segment.text.length
-      }
-    end
-    memoize :translation_units
   end
 end
