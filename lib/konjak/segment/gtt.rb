@@ -1,6 +1,8 @@
 module Konjak
   class Segment < StructuralElement
     module GTT
+      Tag = Struct.new(:open, :close)
+
       def compile_gtt_html_pattern
         regexp = Regexp.escape(text)
         gtt_tag_ns.each do |n|
@@ -14,9 +16,7 @@ module Konjak
       def gtt_tags(text)
         m = text.match(compile_gtt_html_pattern)
         gtt_tag_ns.each_with_object({}) do |n, tags|
-          tags[n] = {
-            open: m["n#{n}"], close:"</#{m["_#{n}"]}>"
-          }
+          tags[n] = Tag.new(m["n#{n}"], "</#{m["_#{n}"]}>")
         end
       end
 
