@@ -20,7 +20,7 @@ module Konjak
         next text unless text.is_a?(TmxSegmentor::SegmentString)
         source_segment = text.segment
         target_segment = source_segment.translation_unit.variant(target_lang).segment
-        target_segment.interpolate_gtt_tags(source_segment.gtt_tags(text))
+        target_segment.interpolate_gtt_tags(source_segment.extract_gtt_tags_from(text))
       end
     end
 

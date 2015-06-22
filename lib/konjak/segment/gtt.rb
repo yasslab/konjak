@@ -13,7 +13,7 @@ module Konjak
         Regexp.compile(regexp)
       end
 
-      def gtt_tags(text)
+      def extract_gtt_tags_from(text)
         m = text.match(compile_gtt_html_pattern)
         gtt_tag_ns.each_with_object([]) do |n, tags|
           tags << Tag.new("{#{n}}", m["n#{n}"])
