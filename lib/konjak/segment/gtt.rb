@@ -1,7 +1,7 @@
 module Konjak
   class Segment < StructuralElement
     module GTT
-      Tag = Struct.new(:open, :close)
+      Tag = Struct.new(:gtt, :html)
 
       def compile_gtt_html_pattern
         regexp = Regexp.escape(text)
@@ -15,16 +15,16 @@ module Konjak
 
       def gtt_tags(text)
         m = text.match(compile_gtt_html_pattern)
-        gtt_tag_ns.each_with_object({}) do |n, tags|
-          tags[n] = Tag.new(m["n#{n}"], "</#{m["_#{n}"]}>")
+        gtt_tag_ns.each_with_object([]) do |n, tags|
+          tags << Tag.new("{#{n}}", m["n#{n}"])
+          tags << Tag.new("{/#{n}}", "</#{m["_#{n}"]}>")
         end
       end
 
       def interpolate_gtt_tags(tags)
         new_text = self.text.dup
-        gtt_tag_ns.each do |n|
-          new_text = new_text.gsub("{#{n}}", tags[n][:open])
-          new_text = new_text.gsub("{/#{n}}", tags[n][:close])
+        tags.each do |tag|
+          new_text = new_text.gsub(tag[:gtt], tag[:html])
         end
         new_text
       end
