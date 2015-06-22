@@ -1,5 +1,6 @@
 require 'mem'
 require 'konjak/tmx_segmentor'
+require 'konjak/translator/translated_string'
 
 module Konjak
   class Translator
@@ -20,7 +21,14 @@ module Konjak
         next text unless text.is_a?(TmxSegmentor::SegmentString)
         source_segment = text.segment
         target_segment = source_segment.translation_unit.variant(target_lang).segment
-        target_segment.interpolate_gtt_tags(source_segment.extract_gtt_tags_from(text))
+
+        if format == :gtt_html
+          gtt_tags          = source_segment.extract_gtt_tags_from(text)
+          translated_string = target_segment.interpolate_gtt_tags(gtt_tags)
+          TranslatedString.new(translated_string)
+        else
+          TranslatedString.new(target_segment.text)
+        end
       end
     end
 
@@ -31,8 +39,12 @@ module Konjak
         content,
         tmx: tmx,
         lang: src_lang,
-        format: options[:format]
+        format: format
       )
+    end
+
+    def format
+      options[:format]
     end
   end
 end
