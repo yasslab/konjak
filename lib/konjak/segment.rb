@@ -15,6 +15,12 @@ module Konjak
       [Text, BeginPairedTag, EndPairedTag, IsolatedTag, Placeholder, Highlight].any? {|c| c === element }
     end
 
+    def compile_pattern
+      regexp = Regexp.escape(text)
+      regexp = regexp.gsub(/(\\\s|\n)/m) { '\s+' }
+      Regexp.compile(regexp)
+    end
+
     def translation_unit
       TranslationUnit.new(translation_unit_variant.parent)
     end

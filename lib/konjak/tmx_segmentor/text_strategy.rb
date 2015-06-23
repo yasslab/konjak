@@ -9,11 +9,11 @@ module Konjak
 
       def split(translation_unit, text)
         segment = translation_unit.variant(@lang).segment
-        segment_text = segment.text
+        pattern = segment.compile_pattern
 
         texts = []
         while true
-          head, match, tail = text.partition(segment_text)
+          head, match, tail = text.partition(pattern)
           break if match.empty? || text.length < min_segment_length
           texts << head unless head.empty?
 
