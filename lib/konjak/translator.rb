@@ -25,9 +25,9 @@ module Konjak
         if format == :gtt_html
           gtt_tags          = source_segment.extract_gtt_tags_from(text)
           translated_string = target_segment.interpolate_gtt_tags(gtt_tags)
-          TranslatedString.new(translated_string)
+          TranslatedString.new(translated_string, text)
         else
-          TranslatedString.new(target_segment.text)
+          TranslatedString.new(target_segment.text, text)
         end
       end
     end
