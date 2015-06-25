@@ -14,7 +14,7 @@ module Konjak
           regexp.gsub!(/\\\{#{n}\\\}/)   { "\\k<n#{n}>" }
           regexp.gsub!(/\\\{\/#{n}\\\}/) { "</\\k<_#{n}>>" }
         end
-        regexp.gsub!(/(?:\\\s|\n)/m)        { '\s' }
+        regexp.gsub!(/\\\s/)                { '\s' }
         regexp.gsub!(/(?:\\s)+/m)           {|s| s + '++' }
         regexp.gsub!(/^(?<s>(?:\\s)+)\+\+/) { $~[:s] }
         regexp.gsub!(/(?<s>(?:\\s)+)\+\+$/) { $~[:s] }
