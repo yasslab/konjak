@@ -1,9 +1,11 @@
 require 'konjak/segment/gtt'
+require 'mem'
 
 module Konjak
   # container
   class Segment < StructuralElement
     include GTT
+    include Mem
 
     # children
     def text
@@ -23,6 +25,7 @@ module Konjak
       regexp = regexp.gsub(/(?<s>(?:\\s)+)\+\+$/) { $~[:s] }
       Regexp.compile(regexp)
     end
+    memoize :compile_pattern
 
     def translation_unit
       TranslationUnit.new(translation_unit_variant.parent)

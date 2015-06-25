@@ -1,6 +1,10 @@
+require 'mem'
+
 module Konjak
   class Segment < StructuralElement
     module GTT
+      include Mem
+
       Tag = Struct.new(:gtt, :html)
 
       def compile_gtt_html_pattern
@@ -16,6 +20,7 @@ module Konjak
         regexp.gsub!(/(?<s>(?:\\s)+)\+\+$/) { $~[:s] }
         Regexp.compile(regexp)
       end
+      memoize :compile_gtt_html_pattern
 
       def extract_gtt_tags_from(text)
         m = text.match(compile_gtt_html_pattern)

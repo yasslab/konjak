@@ -7,24 +7,8 @@ module Konjak
 
       private
 
-      def split(translation_unit, text)
-        segment = translation_unit.variant(@lang).segment
-        pattern = segment.compile_pattern
-
-        texts = []
-        while true
-          break if text.length < min_segment_length
-
-          head, match, tail = text.partition(pattern)
-          break if match.empty?
-
-          texts << head unless head.empty?
-
-          texts << SegmentString.new(match, segment)
-
-          text = tail
-        end
-        texts << text
+      def compile_pattern(segment)
+        segment.compile_pattern
       end
     end
   end
