@@ -17,8 +17,7 @@ module Konjak
 
     def compile_pattern
       regexp = Regexp.escape(text)
-      regexp = regexp.gsub(/(\\\s|\n)/m) { '\s+' }
-      regexp = regexp.gsub(/(\\s\+)+/)   {|s| ('\s' * (s.size / '\s+'.size)) + '+' }
+      regexp = regexp.gsub(/(?:\\\s|\n)/m) { '\s' }
       Regexp.compile(regexp)
     end
 

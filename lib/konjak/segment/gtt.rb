@@ -10,8 +10,7 @@ module Konjak
           regexp = regexp.gsub(/\\\{#{n}\\\}/)   { "\\k<n#{n}>" }
           regexp = regexp.gsub(/\\\{\/#{n}\\\}/) { "</\\k<_#{n}>>" }
         end
-        regexp = regexp.gsub(/(\\\s|\n)/m) { '\s+' }
-        regexp = regexp.gsub(/(\\s\+)+/)   {|s| ('\s' * (s.size / '\s+'.size)) + '+' }
+        regexp = regexp.gsub(/(?:\\\s|\n)/m) { '\s' }
         Regexp.compile(regexp)
       end
 
