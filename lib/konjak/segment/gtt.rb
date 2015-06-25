@@ -13,6 +13,7 @@ module Konjak
         regexp = regexp.gsub(/(?:\\\s|\n)/m)        { '\s' }
         regexp = regexp.gsub(/(?:\\s)+/m)           {|s| s + '++' }
         regexp = regexp.gsub(/^(?<s>(?:\\s)+)\+\+/) { $~[:s] }
+        regexp = regexp.gsub(/(?<s>(?:\\s)+)\+\+$/) { $~[:s] }
         Regexp.compile(regexp)
       end
 
