@@ -33,7 +33,7 @@ module Konjak
     end
 
     def strategy
-      STRATEGIES[format].new(tmx, lang)
+      STRATEGIES[format].new(tmx, lang, @options)
     end
 
   end

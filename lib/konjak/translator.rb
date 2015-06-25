@@ -37,9 +37,11 @@ module Konjak
     def segmentor(content)
       TmxSegmentor.new(
         content,
-        tmx: tmx,
-        lang: src_lang,
-        format: format
+        options.merge({
+          tmx: tmx,
+          lang: src_lang,
+          format: format
+        })
       )
     end
 
