@@ -19,8 +19,10 @@ EXPECT
 
   context 'when blanks between words is not exactly match' do
     let(:doc) { <<DOC }
-this is data
-(with a non-standard character: ).
+this is data         (with a non-standard
+
+
+character: ).
 this is data (with a non-standard character: ).
 DOC
 
@@ -54,7 +56,7 @@ EXPECT
     context 'when blanks between words is not exactly match' do
       let(:doc) { <<GTT_HTML }
 This is
-<a href="http://example.com">example</a>.
+         <a href="http://example.com">example</a>.
 And This
 is
 <b>example</b>. Yey.
