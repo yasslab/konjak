@@ -17,6 +17,7 @@ module Konjak
         segments = [text]
         translation_units.each do |translation_unit|
           segments.map! {|text|
+            next text if text.length < min_segment_length
             next text if text.is_a?(SegmentString)
 
             split(translation_unit, text)
