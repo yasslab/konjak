@@ -6,14 +6,14 @@ module Konjak
       def compile_gtt_html_pattern
         regexp = Regexp.escape(text)
         gtt_tag_ns.each do |n|
-          regexp = regexp.sub(/\\\{#{n}\\\}/)    { "(?<n#{n}><(?<_#{n}>\\w+)[^>]*>)" }
-          regexp = regexp.gsub(/\\\{#{n}\\\}/)   { "\\k<n#{n}>" }
-          regexp = regexp.gsub(/\\\{\/#{n}\\\}/) { "</\\k<_#{n}>>" }
+          regexp.sub!(/\\\{#{n}\\\}/)    { "(?<n#{n}><(?<_#{n}>\\w+)[^>]*>)" }
+          regexp.gsub!(/\\\{#{n}\\\}/)   { "\\k<n#{n}>" }
+          regexp.gsub!(/\\\{\/#{n}\\\}/) { "</\\k<_#{n}>>" }
         end
-        regexp = regexp.gsub(/(?:\\\s|\n)/m)        { '\s' }
-        regexp = regexp.gsub(/(?:\\s)+/m)           {|s| s + '++' }
-        regexp = regexp.gsub(/^(?<s>(?:\\s)+)\+\+/) { $~[:s] }
-        regexp = regexp.gsub(/(?<s>(?:\\s)+)\+\+$/) { $~[:s] }
+        regexp.gsub!(/(?:\\\s|\n)/m)        { '\s' }
+        regexp.gsub!(/(?:\\s)+/m)           {|s| s + '++' }
+        regexp.gsub!(/^(?<s>(?:\\s)+)\+\+/) { $~[:s] }
+        regexp.gsub!(/(?<s>(?:\\s)+)\+\+$/) { $~[:s] }
         Regexp.compile(regexp)
       end
 
