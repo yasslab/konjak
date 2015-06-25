@@ -13,8 +13,11 @@ module Konjak
 
         texts = []
         while true
+          break if text.length < min_segment_length
+
           head, match, tail = text.partition(pattern)
-          break if match.empty? || text.length < min_segment_length
+          break if match.empty?
+
           texts << head unless head.empty?
 
           texts << SegmentString.new(match, segment)
