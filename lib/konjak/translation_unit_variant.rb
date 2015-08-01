@@ -30,6 +30,7 @@ module Konjak
     def segment
       Segment.new(children.detect {|c| c.name == Segment::TAG_NAME })
     end
+    memoize :segment
 
     # methods
 

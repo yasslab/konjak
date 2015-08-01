@@ -1,7 +1,10 @@
+require 'mem'
 require 'delegate'
 
 module Konjak
   class Element < Delegator
+    include Mem
+
     def initialize(__element__)
       @__element__ = __element__
     end

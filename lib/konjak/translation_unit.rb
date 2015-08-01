@@ -23,6 +23,7 @@ module Konjak
     def variants
       children.select {|c| c.name == TranslationUnitVariant::TAG_NAME }.map! {|tuv| TranslationUnitVariant.new(tuv) }
     end
+    memoize :variants
 
     # methods
     def can_contain?(element)
