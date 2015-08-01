@@ -4,7 +4,7 @@ module Konjak
 
     # childrens
     def translation_units
-      children.select {|c| c.name == TranslationUnit::TAG_NAME }.map {|tu| TranslationUnit.new(tu) }
+      children.select {|c| c.name == TranslationUnit::TAG_NAME }.map! {|tu| TranslationUnit.new(tu) }
     end
 
     # methods

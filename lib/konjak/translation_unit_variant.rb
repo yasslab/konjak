@@ -20,11 +20,11 @@ module Konjak
 
     # childrens
     def notes
-      children.select {|c| c.name == 'note' }.map {|n| Note.new(n) }
+      children.select {|c| c.name == 'note' }.map! {|n| Note.new(n) }
     end
 
     def properties
-      children.select {|c| c.name == 'prop' }.map {|n| Property.new(n) }
+      children.select {|c| c.name == 'prop' }.map! {|n| Property.new(n) }
     end
 
     def segment

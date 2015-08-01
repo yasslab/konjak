@@ -20,15 +20,15 @@ module Konjak
 
     # childrens
     def notes
-      children.select {|c| c.name == Note::TAG_NAME }.map {|n| Note.new(n) }
+      children.select {|c| c.name == Note::TAG_NAME }.map! {|n| Note.new(n) }
     end
 
     def user_defined_encodings
-      children.select {|c| c.name == UserDefinedEncoding::TAG_NAME }.map {|n| UserDefinedEncoding.new(n) }
+      children.select {|c| c.name == UserDefinedEncoding::TAG_NAME }.map! {|n| UserDefinedEncoding.new(n) }
     end
 
     def properties
-      children.select {|c| c.name == Property::TAG_NAME }.map {|n| Property.new(n) }
+      children.select {|c| c.name == Property::TAG_NAME }.map! {|n| Property.new(n) }
     end
 
     # methods

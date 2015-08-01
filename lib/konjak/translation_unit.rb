@@ -21,7 +21,7 @@ module Konjak
 
     # childrens
     def variants
-      children.select {|c| c.name == TranslationUnitVariant::TAG_NAME }.map {|tuv| TranslationUnitVariant.new(tuv) }
+      children.select {|c| c.name == TranslationUnitVariant::TAG_NAME }.map! {|tuv| TranslationUnitVariant.new(tuv) }
     end
 
     # methods

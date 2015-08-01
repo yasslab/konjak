@@ -12,7 +12,7 @@ module Konjak
 
     # childrens
     def maps
-      children.select {|c| c.name == Map::TAG_NAME }.map {|n| Map.new(n) }
+      children.select {|c| c.name == Map::TAG_NAME }.map! {|n| Map.new(n) }
     end
 
     # methods
