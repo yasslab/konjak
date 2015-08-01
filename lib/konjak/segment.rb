@@ -5,6 +5,8 @@ module Konjak
   # container
   class Segment < StructuralElement
     TAG_NAME = 'seg'
+    WHITE_SPACE_PATTERN_TEXT = '\s'
+    POSSESSIVE_QUALIFIER = '++'
 
     include GTT
     include Mem
@@ -21,8 +23,8 @@ module Konjak
 
     def compile_pattern
       regexp = Regexp.escape(text)
-      regexp.gsub!(/(?<!^)\\\s/)          { '\s' }
-      regexp.gsub!(/(?<!^)(?:\\s)+(?!$)/) {|s| s + '++' }
+      regexp.gsub!(/(?<!^)\\\s/)          { WHITE_SPACE_PATTERN_TEXT }
+      regexp.gsub!(/(?<!^)(?:\\s)+(?!$)/) {|s| s + POSSESSIVE_QUALIFIER }
       Regexp.compile(regexp)
     end
     memoize :compile_pattern
