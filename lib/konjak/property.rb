@@ -11,14 +11,14 @@ module Konjak
 
     # childrens
     def text
-      Text.new(super)
+      super
     end
 
     # methods
     def can_contain?(element)
       # FIXME
       #    Tool-specific data or text.
-      Text === element
+      String === element
     end
 
     def unpublished?

@@ -38,7 +38,7 @@ describe Konjak do
 
         its(:xml_lang) { is_expected.to eq 'en' }
         its(:o_encoding) { is_expected.to eq 'iso-8859-1' }
-        its(:text) { is_expected.to be_instance_of Konjak::Text }
+        its(:text) { is_expected.to be_instance_of String }
 
         describe 'text' do
           subject { super().text }
@@ -90,7 +90,7 @@ describe Konjak do
         its(:xml_lang)   { is_expected.to eq 'en' }
         its(:o_encoding) { is_expected.to eq 'iso-8859-1' }
         its(:type)       { is_expected.to eq 'RTFPreamble' }
-        its(:text)       { is_expected.to be_instance_of Konjak::Text }
+        its(:text)       { is_expected.to be_instance_of String }
 
         describe '.text' do
           subject { super().text }
@@ -141,7 +141,7 @@ describe Konjak do
           describe '.segment' do
             subject { super().segment }
 
-            its(:text) { is_expected.to be_instance_of Konjak::Text }
+            its(:text) { is_expected.to be_instance_of String }
 
             describe '.text' do
               subject { super().text }

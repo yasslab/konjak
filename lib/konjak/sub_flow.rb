@@ -12,7 +12,7 @@ module Konjak
     #    They can be in any order, except that each <bpt> element must have a subsequent corresponding <ept> element.
 
     def can_contain?(element)
-      [Text, BeginPairedTag, EndPairedTag, IsolatedTag, Placeholder, Hilight].any? {|c| c === element }
+      [String, BeginPairedTag, EndPairedTag, IsolatedTag, Placeholder, Hilight].any? {|c| c === element }
     end
   end
 end

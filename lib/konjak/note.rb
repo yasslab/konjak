@@ -8,12 +8,12 @@ module Konjak
 
     # childrens
     def text
-      Text.new(super)
+      super
     end
 
     # methods
     def can_contain?(element)
-      Text === element
+      String === element
     end
   end
 end

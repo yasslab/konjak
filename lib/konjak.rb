@@ -3,7 +3,6 @@ require 'konjak/parser'
 
 # not elements
 require 'konjak/code_data'
-require 'konjak/text'
 
 # elements
 require 'konjak/element'
