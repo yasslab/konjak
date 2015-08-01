@@ -64,7 +64,6 @@ module Konjak
           tu.variant(@lang).segment.text.length < min_segment_length
         }
       end
-      memoize :translation_units
     end
   end
 end
