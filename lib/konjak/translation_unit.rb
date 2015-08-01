@@ -1,5 +1,7 @@
 module Konjak
   class TranslationUnit < StructuralElement
+    TAG_NAME = 'tu'
+
     # optional attrs
     tmx_attr_accessor(:tuid)
     tmx_attr_accessor(:o_encoding,            :"o-encoding")
@@ -19,7 +21,7 @@ module Konjak
 
     # childrens
     def variants
-      children.select {|c| c.name == 'tuv' }.map {|tuv| TranslationUnitVariant.new(tuv) }
+      children.select {|c| c.name == TranslationUnitVariant::TAG_NAME }.map {|tuv| TranslationUnitVariant.new(tuv) }
     end
 
     # methods

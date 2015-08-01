@@ -4,6 +4,8 @@ require 'mem'
 module Konjak
   # container
   class Segment < StructuralElement
+    TAG_NAME = 'seg'
+
     include GTT
     include Mem
 

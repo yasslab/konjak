@@ -1,5 +1,7 @@
 module Konjak
   class Header < StructuralElement
+    TAG_NAME = 'header'
+
     # required attrs
     tmx_attr_accessor(:creation_tool,         :creationtool,        required: true)
     tmx_attr_accessor(:creation_tool_version, :creationtoolversion, required: true)
@@ -18,15 +20,15 @@ module Konjak
 
     # childrens
     def notes
-      children.select {|c| c.name == 'note' }.map {|n| Note.new(n) }
+      children.select {|c| c.name == Note::TAG_NAME }.map {|n| Note.new(n) }
     end
 
     def user_defined_encodings
-      children.select {|c| c.name == 'ude' }.map {|n| UserDefinedEncoding.new(n) }
+      children.select {|c| c.name == UserDefinedEncoding::TAG_NAME }.map {|n| UserDefinedEncoding.new(n) }
     end
 
     def properties
-      children.select {|c| c.name == 'prop' }.map {|n| Property.new(n) }
+      children.select {|c| c.name == Property::TAG_NAME }.map {|n| Property.new(n) }
     end
 
     # methods

@@ -1,5 +1,7 @@
 module Konjak
   class TranslationUnitVariant < StructuralElement
+    TAG_NAME = 'tuv'
+
     # required attrs
     tmx_attr_accessor(:xml_lang, :'xml:lang', required: true)
 
@@ -26,7 +28,7 @@ module Konjak
     end
 
     def segment
-      Segment.new(children.detect {|c| c.name == 'seg' })
+      Segment.new(children.detect {|c| c.name == Segment::TAG_NAME })
     end
 
     # methods

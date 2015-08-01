@@ -7,12 +7,12 @@ module Konjak
 
     # required element
     def header
-      Header.new(root.at_xpath('header'))
+      Header.new(root.at_xpath(Header::TAG_NAME))
     end
 
     # required element
     def body
-      Body.new(root.at_xpath('body'))
+      Body.new(root.at_xpath(Body::TAG_NAME))
     end
 
     # FIXME

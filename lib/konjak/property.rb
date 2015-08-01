@@ -1,5 +1,7 @@
 module Konjak
   class Property < StructuralElement
+    TAG_NAME = 'prop'
+
     # required attrs
     tmx_attr_accessor(:type, required: true)
 

@@ -1,5 +1,7 @@
 module Konjak
   class Map < StructuralElement
+    TAG_NAME = 'map'
+
     # required attrs
     tmx_attr_accessor(:unicode, required: true)
 
