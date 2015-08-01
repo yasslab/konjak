@@ -18,11 +18,13 @@ module Konjak
         translation_units.each do |translation_unit|
           segment = translation_unit.variant(@lang).segment
 
+          pat = compile_pattern(segment)
+
           segments.map! {|text|
             next text if text.length < min_segment_length
             next text if text.is_a?(SegmentString)
 
-            split(segment, text)
+            split(pat, segment, text)
           }.flatten!
         end
         segments
@@ -38,12 +40,12 @@ module Konjak
         @options[:min_segment_length]
       end
 
-      def split(segment, text)
+      def split(pat, segment, text)
         texts = []
         while true
           break if text.length < min_segment_length
 
-          head, match, tail = text.partition(compile_pattern(segment))
+          head, match, tail = text.partition(pat)
           break if match.empty?
 
           texts << head unless head.empty?

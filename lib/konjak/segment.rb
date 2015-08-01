@@ -27,7 +27,6 @@ module Konjak
       regexp.gsub!(/(?<!^)(?:\\s)+(?!$)/) {|s| s + POSSESSIVE_QUALIFIER }
       Regexp.compile(regexp)
     end
-    memoize :compile_pattern
 
     def translation_unit
       TranslationUnit.new(translation_unit_variant.parent)
