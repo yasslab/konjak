@@ -45,8 +45,11 @@ module Konjak
         while true
           break if text.length < min_segment_length
 
-          head, match, tail = text.partition(pat)
-          break if match.empty?
+          break unless text =~ pat
+
+          head  = $`
+          match = $&
+          tail  = $'
 
           texts << head unless head.empty?
 
