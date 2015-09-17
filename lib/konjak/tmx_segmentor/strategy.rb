@@ -1,4 +1,6 @@
 require 'mem'
+require 'active_support'
+require 'active_support/core_ext/object/try'
 require 'konjak/segmentor'
 require 'konjak/tmx_segmentor/segment_string'
 
