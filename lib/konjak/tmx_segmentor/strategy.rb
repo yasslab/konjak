@@ -62,7 +62,21 @@ module Konjak
 
       def translation_units
         @tmx.body.translation_units.sort_by {|tu|
-          -tu.variant(@lang).segment.text.length
+          # GTTの場合
+          translation_timestamp = nil
+
+          if tm_entry = tu.at('entry_metadata').try(:at, 'tm_entry')
+            source_info = tm_entry.at('source_info')
+            if source_info.try(:at, 'source_lang').try(:text) == @lang && source_info.try(:at, 'source').try(:text) == tu.variant(@lang).segment.text
+              translation_timestamp = tm_entry.at('translation').try(:attr, 'translation_timestamp').to_i
+            end
+          end
+
+          translation_timestamp ||= 0
+
+          segment_length = tu.variant(@lang).segment.text.length
+
+          [-translation_timestamp, -segment_length]
         }.reject {|tu|
           tu.variant(@lang).segment.text.length < min_segment_length
         }
