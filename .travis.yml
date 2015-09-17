@@ -5,3 +5,4 @@ env:
   global:
   - secure: V8yG0G03Dsabc5mK4ubx3wSd0FyW0tazC/4DsJrvQTXSNytab1tXpwQbaN1XUyWTGnOj58mSZAPk/36n/5sGEwq3HIYCvPbJrqrCRODTDzmYy5uA1N+/Mo2uA55lPBjCbfcEvO1oy9tQIcH3I3R29nqiTsIRXax8XoFXHlJdP7I=
   - secure: MghViLairF+zNTbCoH/ibECjud2Wf+6K3qKDIbo1dkxqzU4xIILDtODUmlLTQh0Da/IbAmTIc0XV5GgnftoiDIg9s6PQRhNeQX3heA6ElxwmOZmKNvcSutxZLm0AT3/PPZluykg5KBoETZQEAXLVamwbKiGCM9eIlTwOqRrHDRI=
+sudo: false
