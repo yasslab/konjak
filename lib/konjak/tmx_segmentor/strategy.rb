@@ -76,25 +76,8 @@ module Konjak
           text =~ compile_pattern(tu.variant(@lang).segment)
         }
 
-        simular_translation_units_map = {}
-
         tus.sort_by! {|tu|
-          tu_segment = tu.variant(@lang).segment
-          segment_text = tu_segment.text
-
-          unless simular_translation_units_map[segment_text]
-            simular_translation_units = tus.select {|tu2|
-              tu2.variant(@lang).segment.text =~ compile_pattern(tu_segment)
-            }.sort_by! {|tu2| tu2.variant(@lang).segment.text.size }
-
-            simular_translation_units.each do |tu2|
-              simular_translation_units_map[tu2.variant(@lang).segment.text] = simular_translation_units
-            end
-          end
-
-          rank = simular_translation_units_map[segment_text].index {|tu2|
-            tu2.variant(@lang).segment.text == segment_text
-          }
+          segment_text = tu.variant(@lang).segment.text
 
           # GTTの場合
           translation_timestamp = nil
@@ -106,7 +89,7 @@ module Konjak
           end
           translation_timestamp ||= 0
 
-          [-rank, -translation_timestamp, -segment_text.length]
+          [-translation_timestamp, -segment_text.length]
         }
 
         tus.reject! {|tu|
