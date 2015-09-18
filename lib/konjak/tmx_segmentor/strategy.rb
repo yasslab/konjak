@@ -90,7 +90,7 @@ module Konjak
 
           unless simular_translation_units_map[segment_text]
             simular_translation_units = tus.select {|tu2|
-              tu2.variant(@lang).segment.text =~ compile_pattern(tu_segment)
+              tu2.variant(@lang).segment.text.include?(segment_text)
             }.sort_by! {|tu2| tu2.variant(@lang).segment.text.size }
 
             simular_translation_units.each do |tu2|
