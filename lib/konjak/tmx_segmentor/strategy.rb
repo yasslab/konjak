@@ -17,7 +17,7 @@ module Konjak
 
       def segmentize(text)
         segments = [text]
-        translation_units.each do |translation_unit|
+        translation_units(text).each do |translation_unit|
           segment = translation_unit.variant(@lang).segment
 
           pat = compile_pattern(segment)
@@ -69,8 +69,14 @@ module Konjak
         texts << text
       end
 
-      def translation_units
-        @tmx.body.translation_units.sort_by {|tu|
+      def translation_units(text)
+        tus = @tmx.body.translation_units
+
+        tus.select! {|tu|
+          text =~ compile_pattern(tu.variant(@lang).segment)
+        }
+
+        tus.sort_by! {|tu|
           # GTTの場合
           translation_timestamp = nil
 
@@ -86,12 +92,16 @@ module Konjak
           segment_length = tu.variant(@lang).segment.text.length
 
           [-translation_timestamp, -segment_length]
-        }.reject {|tu|
+        }
+
+        tus.reject! {|tu|
           segment_length = tu.variant(@lang).segment.text.length
           next true if segment_length < min_segment_length
-          next true if max_segment_length < segment_length
+          next true if max_segment_length && max_segment_length < segment_length
           false
         }
+
+        tus
       end
     end
   end
