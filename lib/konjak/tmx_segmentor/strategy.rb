@@ -73,6 +73,12 @@ module Konjak
         tus = @tmx.body.translation_units
 
         tus.select! {|tu|
+          segment = tu.variant(@lang).segment
+          segment_length = segment.text.length
+
+          next false if segment_length < min_segment_length
+          next false if max_segment_length && max_segment_length < segment_length
+
           text =~ compile_pattern(tu.variant(@lang).segment)
         }
 
@@ -90,13 +96,6 @@ module Konjak
           translation_timestamp ||= 0
 
           [-translation_timestamp, -segment_text.length]
-        }
-
-        tus.reject! {|tu|
-          segment_length = tu.variant(@lang).segment.text.length
-          next true if segment_length < min_segment_length
-          next true if max_segment_length && max_segment_length < segment_length
-          false
         }
 
         tus
