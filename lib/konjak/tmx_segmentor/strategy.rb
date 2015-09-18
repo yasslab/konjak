@@ -35,11 +35,18 @@ module Konjak
       private
 
       def default_options
-        {min_segment_length: 10}
+        {
+          min_segment_length: 10,
+          max_segment_length: nil
+        }
       end
 
       def min_segment_length
         @options[:min_segment_length]
+      end
+
+      def max_segment_length
+        @options[:max_segment_length]
       end
 
       def split(pat, segment, text)
@@ -80,7 +87,10 @@ module Konjak
 
           [-translation_timestamp, -segment_length]
         }.reject {|tu|
-          tu.variant(@lang).segment.text.length < min_segment_length
+          segment_length = tu.variant(@lang).segment.text.length
+          next true if segment_length < min_segment_length
+          next true if max_segment_length < segment_length
+          false
         }
       end
     end
