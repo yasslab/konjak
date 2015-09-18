@@ -76,22 +76,37 @@ module Konjak
           text =~ compile_pattern(tu.variant(@lang).segment)
         }
 
-        tus.sort_by! {|tu|
-          # GTTの場合
-          translation_timestamp = nil
+        simular_translation_units_map = {}
 
-          if tm_entry = tu.at('entry_metadata').try(:at, 'tm_entry')
-            source_info = tm_entry.at('source_info')
-            if source_info.try(:at, 'source_lang').try(:text) == @lang && source_info.try(:at, 'source').try(:text) == tu.variant(@lang).segment.text
-              translation_timestamp = tm_entry.at('translation').try(:attr, 'translation_timestamp').to_i
+        tus.sort_by! {|tu|
+          tu_segment = tu.variant(@lang).segment
+          segment_text = tu_segment.text
+
+          unless simular_translation_units_map[segment_text]
+            simular_translation_units = tus.select {|tu2|
+              tu2.variant(@lang).segment.text =~ compile_pattern(tu_segment)
+            }.sort_by! {|tu2| tu2.variant(@lang).segment.text.size }
+
+            simular_translation_units.each do |tu2|
+              simular_translation_units_map[tu2.variant(@lang).segment.text] = simular_translation_units
             end
           end
 
+          rank = simular_translation_units_map[segment_text].index {|tu2|
+            tu2.variant(@lang).segment.text == segment_text
+          }
+
+          # GTTの場合
+          translation_timestamp = nil
+          if tm_entry = tu.at('entry_metadata').try(:at, 'tm_entry')
+            source_info = tm_entry.at('source_info')
+            if source_info.try(:at, 'source_lang').try(:text) == @lang && source_info.try(:at, 'source').try(:text) == segment_text
+              translation_timestamp = tm_entry.at('translation').try(:attr, 'translation_timestamp').to_i
+            end
+          end
           translation_timestamp ||= 0
 
-          segment_length = tu.variant(@lang).segment.text.length
-
-          [-translation_timestamp, -segment_length]
+          [-rank, -translation_timestamp, -segment_text.length]
         }
 
         tus.reject! {|tu|
