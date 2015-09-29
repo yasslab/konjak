@@ -21,7 +21,6 @@ module Konjak
         translation_units.each {|tu|
           segment = tu.variant(@lang).segment
           text.scan(compile_pattern(segment)) {
-            # Struct.new(:range, :segment, :prev)
             range_segment_pairs << [($~.begin(0)...$~.end(0)), segment]
           }
         }
@@ -29,8 +28,10 @@ module Konjak
         # Can't split text
         return [text] if range_segment_pairs.empty?
 
-        range_segment_pairs.uniq!(&:first)
-        range_segment_pairs.sort_by! {|(m, _)| m.begin }
+        range_segment_pairs.uniq! {|rsp| [rsp[0], rsp[1].text] }
+        range_segment_pairs.sort_by! {|(m, s)|
+          [m.begin, -s.text.size]
+        }
 
         max_weight_range_segments = max_weight_range_segments(range_segment_pairs)
 
