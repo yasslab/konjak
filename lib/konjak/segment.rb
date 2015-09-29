@@ -23,8 +23,8 @@ module Konjak
 
     def compile_pattern
       regexp = Regexp.escape(text)
-      regexp.gsub!(/(?<!^)\\\s/)          { WHITE_SPACE_PATTERN_TEXT }
-      regexp.gsub!(/(?<!^)(?:\\s)+(?!$)/) {|s| s + POSSESSIVE_QUALIFIER }
+      regexp.gsub!(/(?<!^)\\\s/)     { WHITE_SPACE_PATTERN_TEXT }
+      regexp.gsub!(/(?<!^)(?:\\s)+/) {|s| s + POSSESSIVE_QUALIFIER }
       Regexp.compile(regexp)
     end
 
