@@ -11,7 +11,7 @@ module Konjak
     }
 
     def segments
-      strategy.segmentize(content)
+      strategy.segments
     end
 
     private
@@ -33,7 +33,7 @@ module Konjak
     end
 
     def strategy
-      STRATEGIES[format].new(tmx, lang, @options)
+      STRATEGIES[format].new(tmx, lang, content, @options)
     end
 
   end

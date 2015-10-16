@@ -12,22 +12,16 @@ module Konjak
 
       include Mem
 
-      def initialize(tmx, lang, options = {})
-        @tmx = tmx
-        @lang = lang
+      def initialize(tmx, lang, text, options = {})
+        @tmx     = tmx
+        @lang    = lang
+        @text    = text
         @options = default_options.merge(options)
       end
 
-      def segmentize(text)
-        nodes = scan_nodes(text)
-
+      def segments
         # Can't split text
-        return [text] if nodes.empty?
-
-        nodes.uniq! {|node| [node.range, node.segment.text] }
-        nodes.sort_by! {|node|
-          [node.range.begin, -node.segment.text.size]
-        }
+        return [@text] if nodes.empty?
 
         max_weight_range_segments = max_weight_range_segments(nodes)
 
@@ -36,15 +30,15 @@ module Konjak
         max_weight_range_segments.each do |node|
           range     = node.range
           segment   = node.segment
-          prev_text = text[prev_text_index...range.begin]
+          prev_text = @text[prev_text_index...range.begin]
 
           segments << prev_text unless prev_text.empty?
 
-          segments << SegmentString.new(text[range.begin, range.size], segment)
+          segments << SegmentString.new(@text[range.begin, range.size], segment)
 
           prev_text_index = range.end
         end
-        after_text = text[prev_text_index..-1]
+        after_text = @text[prev_text_index..-1]
         segments << after_text unless after_text.empty?
         segments
       end
@@ -92,17 +86,22 @@ module Konjak
 
       private
 
-      def scan_nodes(text)
-        nodes = []
+      def nodes
+        return @nodes if @nodes
+
+        @nodes = []
 
         translation_units.each {|tu|
           segment = tu.variant(@lang).segment
-          text.scan(compile_pattern(segment)) {
-            nodes << Node.new(($~.begin(0)...$~.end(0)), segment)
+          @text.scan(compile_pattern(segment)) {
+            @nodes << Node.new(($~.begin(0)...$~.end(0)), segment)
           }
         }
 
-        nodes
+        @nodes.uniq! {|node| [node.range, node.segment.text] }
+        @nodes.sort_by! {|node| [node.range.begin, -node.segment.text.size] }
+
+        @nodes
       end
 
       def default_options
