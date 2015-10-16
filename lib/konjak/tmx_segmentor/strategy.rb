@@ -51,7 +51,7 @@ module Konjak
 
         edges.each do |edge|
           node, node2  = edge.prev, edge.current
-          new_node2_cost = costs[node] + node2.range.size
+          new_node2_cost = costs[node] + calc_edge_cost(edge)
 
           if costs[node2] < new_node2_cost
             costs[node2] = new_node2_cost
@@ -109,8 +109,13 @@ module Konjak
 
       def default_options
         {
-          translation_unit_filter: -> (tu) { true }
+          translation_unit_filter: -> (tu) { true },
+          calc_edge_cost:  -> (edge) { edge.current.size }
         }
+      end
+
+      def calc_edge_cost(edge)
+        @options[:calc_edge_cost].call(edge)
       end
 
       def translation_unit_filter
