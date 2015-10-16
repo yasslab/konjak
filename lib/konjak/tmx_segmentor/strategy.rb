@@ -9,6 +9,7 @@ module Konjak
     class Strategy
       Edge = Struct.new(:prev,  :current)
       Node = Struct.new(:range, :segment)
+      Node::None = -1
 
       include Mem
 
@@ -45,7 +46,7 @@ module Konjak
 
 
       def max_weight_range_segments
-        prev_nodes = Array.new(nodes.size, -1)
+        prev_nodes = Array.new(nodes.size, Node::None)
         weights    = nodes.map {|node| node.range.size }
 
         edges.each do |edge|
@@ -62,7 +63,7 @@ module Konjak
 
         max_weight_range_segment_indexes = Enumerator.new {|y|
           loop do
-            break if node_index == -1
+            break if node_index == Node::None
             y << node_index
             node_index = prev_nodes[node_index]
           end
