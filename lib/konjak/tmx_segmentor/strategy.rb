@@ -23,7 +23,7 @@ module Konjak
         # Can't split text
         return [@text] if nodes.empty?
 
-        max_weight_range_segments = max_weight_range_segments(nodes)
+        max_weight_range_segments = self.max_weight_range_segments
 
         segments = []
         prev_text_index = 0
@@ -44,7 +44,7 @@ module Konjak
       end
 
 
-      def max_weight_range_segments(nodes)
+      def max_weight_range_segments
         edges      = []
         prev_nodes = Array.new(nodes.size, -1)
         weights    = nodes.map {|node| node.range.size }
