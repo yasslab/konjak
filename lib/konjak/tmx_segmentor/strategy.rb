@@ -24,11 +24,11 @@ module Konjak
         # Can't split text
         return [@text] if nodes.empty?
 
-        max_weight_range_segments = self.max_weight_range_segments
+        max_cost_nodes = self.max_cost_nodes
 
         segments = []
         prev_text_index = 0
-        max_weight_range_segments.each do |node|
+        max_cost_nodes.each do |node|
           range     = node.range
           segment   = node.segment
           prev_text = @text[prev_text_index...range.begin]
@@ -45,23 +45,23 @@ module Konjak
       end
 
 
-      def max_weight_range_segments
+      def max_cost_nodes
         prev_nodes = Array.new(nodes.size, Node::None)
-        weights    = nodes.map {|node| node.range.size }
+        costs      = nodes.map {|node| node.range.size }
 
         edges.each do |edge|
-          node_i, node2_i = edge.prev, edge.current
-          new_node2_weight = weights[node_i] + nodes[node2_i].range.size
+          node_i, node2_i  = edge.prev, edge.current
+          new_node2_cost = costs[node_i] + nodes[node2_i].range.size
 
-          if weights[node2_i] < new_node2_weight
-            weights[node2_i] = new_node2_weight
+          if costs[node2_i] < new_node2_cost
+            costs[node2_i] = new_node2_cost
             prev_nodes[node2_i] = node_i
           end
         end
 
-        node_index = weights.index(weights.max)
+        node_index = costs.index(costs.max)
 
-        max_weight_range_segment_indexes = Enumerator.new {|y|
+        max_cost_node_indexes = Enumerator.new {|y|
           loop do
             break if node_index == Node::None
             y << node_index
@@ -69,7 +69,7 @@ module Konjak
           end
         }.to_a.reverse
 
-        max_weight_range_segment_indexes.map {|i|
+        max_cost_node_indexes.map {|i|
           nodes[i]
         }
       end
