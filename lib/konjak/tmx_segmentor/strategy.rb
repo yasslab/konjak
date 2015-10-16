@@ -99,7 +99,6 @@ module Konjak
           }
         }
 
-        @nodes.uniq! {|node| [node.range, node.segment.text] }
         @nodes.sort_by! {|node| [node.range.begin, -node.segment.text.size] }
 
         @nodes
