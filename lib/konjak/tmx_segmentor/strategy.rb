@@ -6,6 +6,8 @@ require 'konjak/tmx_segmentor/segment_string'
 
 module Konjak
   class TmxSegmentor < Segmentor
+    RangeSegmentPair = Struct.new(:range, :segment)
+
     class Strategy
       include Mem
 
@@ -21,23 +23,25 @@ module Konjak
         translation_units.each {|tu|
           segment = tu.variant(@lang).segment
           text.scan(compile_pattern(segment)) {
-            range_segment_pairs << [($~.begin(0)...$~.end(0)), segment]
+            range_segment_pairs << RangeSegmentPair.new(($~.begin(0)...$~.end(0)), segment)
           }
         }
 
         # Can't split text
         return [text] if range_segment_pairs.empty?
 
-        range_segment_pairs.uniq! {|rsp| [rsp[0], rsp[1].text] }
-        range_segment_pairs.sort_by! {|(m, s)|
-          [m.begin, -s.text.size]
+        range_segment_pairs.uniq! {|rsp| [rsp.range, rsp.segment.text] }
+        range_segment_pairs.sort_by! {|rsp|
+          [rsp.range.begin, -rsp.segment.text.size]
         }
 
         max_weight_range_segments = max_weight_range_segments(range_segment_pairs)
 
         segments = []
         prev_text_index = 0
-        max_weight_range_segments.each do |(range, segment)|
+        max_weight_range_segments.each do |rsp|
+          range     = rsp.range
+          segment   = rsp.segment
           prev_text = text[prev_text_index...range.begin]
 
           segments << prev_text unless prev_text.empty?
@@ -55,20 +59,20 @@ module Konjak
       def max_weight_range_segments(range_segment_pairs)
         edges      = []
         prev_nodes = Array.new(range_segment_pairs.size, -1)
-        weights    = range_segment_pairs.map {|rsp| rsp[0].size }
+        weights    = range_segment_pairs.map {|rsp| rsp.range.size }
 
         range_segment_pairs.each_with_index do |rsp, rsp_i|
           ((rsp_i + 1)...range_segment_pairs.size).each do |rsp2_i|
             rsp2 = range_segment_pairs[rsp2_i]
 
-            next if rsp2[0].begin < rsp[0].end
+            next if rsp2.range.begin < rsp.range.end
 
             edges << [rsp_i, rsp2_i]
           end
         end
 
         edges.each do |(rsp_i, rsp2_i)|
-          new_rsp2_weight = weights[rsp_i] + range_segment_pairs[rsp2_i][0].size
+          new_rsp2_weight = weights[rsp_i] + range_segment_pairs[rsp2_i].range.size
 
           if weights[rsp2_i] < new_rsp2_weight
             weights[rsp2_i] = new_rsp2_weight
