@@ -112,7 +112,9 @@ module Konjak
       end
 
       def default_options
-        {}
+        {
+          translation_unit_filter: -> (tu) { true }
+        }
       end
 
       def translation_unit_filter
@@ -120,11 +122,7 @@ module Konjak
       end
 
       def translation_units
-        if translation_unit_filter
-          @translation_units ||= @tmx.body.translation_units.select(&translation_unit_filter)
-        else
-          @translation_units ||= @tmx.body.translation_units
-        end
+        @translation_units ||= @tmx.body.translation_units.select(&translation_unit_filter)
       end
     end
   end
