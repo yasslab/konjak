@@ -94,30 +94,19 @@ module Konjak
       private
 
       def default_options
-        {
-          min_segment_length: 10,
-          max_segment_length: nil
-        }
+        {}
       end
 
-      def min_segment_length
-        @options[:min_segment_length]
-      end
-
-      def max_segment_length
-        @options[:max_segment_length]
+      def translation_unit_filter
+        @options[:translation_unit_filter]
       end
 
       def translation_units
-        @translation_units ||= @tmx.body.translation_units.select {|tu|
-          segment = tu.variant(@lang).segment
-          segment_length = segment.text.length
-
-          next false if segment_length < min_segment_length
-          next false if max_segment_length && max_segment_length < segment_length
-
-          true
-        }
+        if translation_unit_filter
+          @translation_units ||= @tmx.body.translation_units.select(&translation_unit_filter)
+        else
+          @translation_units ||= @tmx.body.translation_units
+        end
       end
     end
   end
