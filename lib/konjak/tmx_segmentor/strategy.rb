@@ -7,8 +7,8 @@ require 'konjak/tmx_segmentor/segment_string'
 module Konjak
   class TmxSegmentor < Segmentor
     class Strategy
-      Edge             = Struct.new(:left,  :right)
-      RangeSegmentPair = Struct.new(:range, :segment)
+      Edge = Struct.new(:left,  :right)
+      Node = Struct.new(:range, :segment)
 
       include Mem
 
@@ -19,30 +19,30 @@ module Konjak
       end
 
       def segmentize(text)
-        range_segment_pairs = []
+        nodes = []
 
         translation_units.each {|tu|
           segment = tu.variant(@lang).segment
           text.scan(compile_pattern(segment)) {
-            range_segment_pairs << RangeSegmentPair.new(($~.begin(0)...$~.end(0)), segment)
+            nodes << Node.new(($~.begin(0)...$~.end(0)), segment)
           }
         }
 
         # Can't split text
-        return [text] if range_segment_pairs.empty?
+        return [text] if nodes.empty?
 
-        range_segment_pairs.uniq! {|rsp| [rsp.range, rsp.segment.text] }
-        range_segment_pairs.sort_by! {|rsp|
-          [rsp.range.begin, -rsp.segment.text.size]
+        nodes.uniq! {|node| [node.range, node.segment.text] }
+        nodes.sort_by! {|node|
+          [node.range.begin, -node.segment.text.size]
         }
 
-        max_weight_range_segments = max_weight_range_segments(range_segment_pairs)
+        max_weight_range_segments = max_weight_range_segments(nodes)
 
         segments = []
         prev_text_index = 0
-        max_weight_range_segments.each do |rsp|
-          range     = rsp.range
-          segment   = rsp.segment
+        max_weight_range_segments.each do |node|
+          range     = node.range
+          segment   = node.segment
           prev_text = text[prev_text_index...range.begin]
 
           segments << prev_text unless prev_text.empty?
@@ -57,28 +57,28 @@ module Konjak
       end
 
 
-      def max_weight_range_segments(range_segment_pairs)
+      def max_weight_range_segments(nodes)
         edges      = []
-        prev_nodes = Array.new(range_segment_pairs.size, -1)
-        weights    = range_segment_pairs.map {|rsp| rsp.range.size }
+        prev_nodes = Array.new(nodes.size, -1)
+        weights    = nodes.map {|node| node.range.size }
 
-        range_segment_pairs.each_with_index do |rsp, rsp_i|
-          ((rsp_i + 1)...range_segment_pairs.size).each do |rsp2_i|
-            rsp2 = range_segment_pairs[rsp2_i]
+        nodes.each_with_index do |node, node_i|
+          ((node_i + 1)...nodes.size).each do |node2_i|
+            node2 = nodes[node2_i]
 
-            next if rsp2.range.begin < rsp.range.end
+            next if node2.range.begin < node.range.end
 
-            edges << Edge.new(rsp_i, rsp2_i)
+            edges << Edge.new(node_i, node2_i)
           end
         end
 
         edges.each do |edge|
-          rsp_i, rsp2_i = edge.left, edge.right
-          new_rsp2_weight = weights[rsp_i] + range_segment_pairs[rsp2_i].range.size
+          node_i, node2_i = edge.left, edge.right
+          new_node2_weight = weights[node_i] + nodes[node2_i].range.size
 
-          if weights[rsp2_i] < new_rsp2_weight
-            weights[rsp2_i] = new_rsp2_weight
-            prev_nodes[rsp2_i] = rsp_i
+          if weights[node2_i] < new_node2_weight
+            weights[node2_i] = new_node2_weight
+            prev_nodes[node2_i] = node_i
           end
         end
 
@@ -93,7 +93,7 @@ module Konjak
         }.to_a.reverse
 
         max_weight_range_segment_indexes.map {|i|
-          range_segment_pairs[i]
+          nodes[i]
         }
       end
 
