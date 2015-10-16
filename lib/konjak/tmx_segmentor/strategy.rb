@@ -45,19 +45,8 @@ module Konjak
 
 
       def max_weight_range_segments
-        edges      = []
         prev_nodes = Array.new(nodes.size, -1)
         weights    = nodes.map {|node| node.range.size }
-
-        nodes.each_with_index do |node, node_i|
-          ((node_i + 1)...nodes.size).each do |node2_i|
-            node2 = nodes[node2_i]
-
-            next if node2.range.begin < node.range.end
-
-            edges << Edge.new(node_i, node2_i)
-          end
-        end
 
         edges.each do |edge|
           node_i, node2_i = edge.prev, edge.current
@@ -85,6 +74,23 @@ module Konjak
       end
 
       private
+
+      def edges
+        return @edges if @edges
+
+        @edges     = []
+        nodes.each_with_index do |node, node_i|
+          ((node_i + 1)...nodes.size).each do |node2_i|
+            node2 = nodes[node2_i]
+
+            next if node2.range.begin < node.range.end
+
+            @edges << Edge.new(node_i, node2_i)
+          end
+        end
+
+        @edges
+      end
 
       def nodes
         return @nodes if @nodes
