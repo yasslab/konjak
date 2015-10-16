@@ -6,10 +6,10 @@ require 'konjak/tmx_segmentor/segment_string'
 
 module Konjak
   class TmxSegmentor < Segmentor
-    Edge             = Struct.new(:left,  :right)
-    RangeSegmentPair = Struct.new(:range, :segment)
-
     class Strategy
+      Edge             = Struct.new(:left,  :right)
+      RangeSegmentPair = Struct.new(:range, :segment)
+
       include Mem
 
       def initialize(tmx, lang, options = {})
