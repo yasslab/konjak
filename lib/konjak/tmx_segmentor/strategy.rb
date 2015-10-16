@@ -19,14 +19,7 @@ module Konjak
       end
 
       def segmentize(text)
-        nodes = []
-
-        translation_units.each {|tu|
-          segment = tu.variant(@lang).segment
-          text.scan(compile_pattern(segment)) {
-            nodes << Node.new(($~.begin(0)...$~.end(0)), segment)
-          }
-        }
+        nodes = scan_nodes(text)
 
         # Can't split text
         return [text] if nodes.empty?
@@ -98,6 +91,19 @@ module Konjak
       end
 
       private
+
+      def scan_nodes(text)
+        nodes = []
+
+        translation_units.each {|tu|
+          segment = tu.variant(@lang).segment
+          text.scan(compile_pattern(segment)) {
+            nodes << Node.new(($~.begin(0)...$~.end(0)), segment)
+          }
+        }
+
+        nodes
+      end
 
       def default_options
         {}
