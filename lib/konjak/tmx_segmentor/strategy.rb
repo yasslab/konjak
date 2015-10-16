@@ -6,6 +6,7 @@ require 'konjak/tmx_segmentor/segment_string'
 
 module Konjak
   class TmxSegmentor < Segmentor
+    Edge             = Struct.new(:left,  :right)
     RangeSegmentPair = Struct.new(:range, :segment)
 
     class Strategy
@@ -67,11 +68,12 @@ module Konjak
 
             next if rsp2.range.begin < rsp.range.end
 
-            edges << [rsp_i, rsp2_i]
+            edges << Edge.new(rsp_i, rsp2_i)
           end
         end
 
-        edges.each do |(rsp_i, rsp2_i)|
+        edges.each do |edge|
+          rsp_i, rsp2_i = edge.left, edge.right
           new_rsp2_weight = weights[rsp_i] + range_segment_pairs[rsp2_i].range.size
 
           if weights[rsp2_i] < new_rsp2_weight
