@@ -7,7 +7,7 @@ require 'konjak/tmx_segmentor/segment_string'
 module Konjak
   class TmxSegmentor < Segmentor
     class Strategy
-      Edge = Struct.new(:left,  :right)
+      Edge = Struct.new(:prev,  :current)
       Node = Struct.new(:range, :segment)
 
       include Mem
@@ -73,7 +73,7 @@ module Konjak
         end
 
         edges.each do |edge|
-          node_i, node2_i = edge.left, edge.right
+          node_i, node2_i = edge.prev, edge.current
           new_node2_weight = weights[node_i] + nodes[node2_i].range.size
 
           if weights[node2_i] < new_node2_weight
