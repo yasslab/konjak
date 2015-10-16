@@ -47,19 +47,20 @@ module Konjak
 
       def max_cost_nodes
         prev_nodes = Array.new(nodes.size, Node::None)
-        costs      = nodes.map {|node| node.range.size }
+        costs      = nodes.map {|node| [node, node.range.size] }.to_h
 
         edges.each do |edge|
           node_i, node2_i  = edge.prev, edge.current
-          new_node2_cost = costs[node_i] + nodes[node2_i].range.size
+          new_node2_cost = costs[nodes[node_i]] + nodes[node2_i].range.size
 
-          if costs[node2_i] < new_node2_cost
-            costs[node2_i] = new_node2_cost
+          if costs[nodes[node2_i]] < new_node2_cost
+            costs[nodes[node2_i]] = new_node2_cost
             prev_nodes[node2_i] = node_i
           end
         end
 
-        node_index = costs.index(costs.max)
+        node, _ = costs.max_by {|_, cost| cost }
+        node_index = nodes.index(node)
 
         max_cost_node_indexes = Enumerator.new {|y|
           loop do
