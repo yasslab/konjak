@@ -24,11 +24,9 @@ module Konjak
         # Can't split text
         return [@text] if nodes.empty?
 
-        max_cost_nodes = self.max_cost_nodes
-
         segments = []
         prev_text_index = 0
-        max_cost_nodes.each do |node|
+        max_cost_path.each do |node|
           range     = node.range
           segment   = node.segment
           prev_text = @text[prev_text_index...range.begin]
@@ -45,7 +43,7 @@ module Konjak
       end
 
 
-      def max_cost_nodes
+      def max_cost_path
         prev_nodes = nodes.map {|node| [node, Node::None] }.to_h
         costs      = nodes.map {|node| [node, node.range.size] }.to_h
 
