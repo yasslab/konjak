@@ -8,7 +8,11 @@ module Konjak
   class TmxSegmentor < Segmentor
     class Strategy
       Edge = Struct.new(:prev,  :current)
-      Node = Struct.new(:range, :segment)
+      Node = Struct.new(:range, :segment) do
+        def <=>(other)
+          [range.begin, -segment.text.size] <=> [other.range.begin, -other.segment.text.size]
+        end
+      end
       Node::None = -1
 
       include Mem
@@ -99,7 +103,7 @@ module Konjak
           }
         }
 
-        @nodes.sort_by! {|node| [node.range.begin, -node.segment.text.size] }
+        @nodes.sort!
 
         @nodes
       end
