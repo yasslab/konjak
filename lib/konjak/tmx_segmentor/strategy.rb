@@ -121,7 +121,7 @@ module Konjak
         {
           translation_unit_filter: -> (tu) { true },
           calc_edge_cost:  -> (edge) { edge.current.max_segment_size },
-          select_next_segment: -> (_, _, node) { node.segments.first }
+          select_next_segment: -> (_, node) { node.segments.first }
         }
       end
 
