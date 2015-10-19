@@ -8,9 +8,13 @@ module Konjak
   class TmxSegmentor < Segmentor
     class Strategy
       Edge = Struct.new(:prev,  :current)
-      Node = Struct.new(:range, :segment) do
+      Node = Struct.new(:range, :segments) do
         def <=>(other)
-          [range.begin, -segment.text.size] <=> [other.range.begin, -other.segment.text.size]
+          [range.begin, -max_segment_size] <=> [other.range.begin, -other.max_segment_size]
+        end
+
+        def max_segment_size
+          segments.max_by {|s| s.text.size }.text.size
         end
       end
       Node::None = -1
@@ -29,19 +33,21 @@ module Konjak
         return [@text] if nodes.empty?
 
         segments = []
-        prev_text_index = 0
+        prev_text_end = 0
+        prev_segment = nil
         max_cost_path.each do |node|
           range     = node.range
-          segment   = node.segment
-          prev_text = @text[prev_text_index...range.begin]
+          segment   = select_next_segment(prev_segment, node)
+          prev_text = @text[prev_text_end...range.begin]
 
           segments << prev_text unless prev_text.empty?
 
           segments << SegmentString.new(@text[range.begin, range.size], segment)
 
-          prev_text_index = range.end
+          prev_segment    = segment
+          prev_text_end = range.end
         end
-        after_text = @text[prev_text_index..-1]
+        after_text = @text[prev_text_end..-1]
         segments << after_text unless after_text.empty?
         segments
       end
@@ -95,15 +101,17 @@ module Konjak
       def nodes
         return @nodes if @nodes
 
-        @nodes = []
+        @nodes = {}
 
         translation_units.each {|tu|
           segment = tu.variant(@lang).segment
           @text.scan(compile_pattern(segment)) {
-            @nodes << Node.new(($~.begin(0)...$~.end(0)), segment)
+            r = $~.begin(0)...$~.end(0)
+            @nodes[r] ||= []
+            @nodes[r] << segment
           }
         }
-
+        @nodes = @nodes.map {|(r, segments)| Node.new(r, segments) }
         @nodes.sort!
 
         @nodes
@@ -112,7 +120,8 @@ module Konjak
       def default_options
         {
           translation_unit_filter: -> (tu) { true },
-          calc_edge_cost:  -> (edge) { edge.current.segment.size }
+          calc_edge_cost:  -> (edge) { edge.current.max_segment_size },
+          select_next_segment: -> (_, _, node) { node.segments.first }
         }
       end
 
@@ -122,6 +131,10 @@ module Konjak
 
       def translation_unit_filter
         @options[:translation_unit_filter]
+      end
+
+      def select_next_segment(prev_segment, node)
+        @options[:select_next_segment].call(prev_segment, node)
       end
 
       def translation_units
