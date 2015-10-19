@@ -111,7 +111,7 @@ module Konjak
       def default_options
         {
           translation_unit_filter: -> (tu) { true },
-          calc_edge_cost:  -> (edge) { edge.current.size }
+          calc_edge_cost:  -> (edge) { edge.current.segment.size }
         }
       end
 
