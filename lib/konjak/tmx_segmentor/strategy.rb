@@ -52,10 +52,11 @@ module Konjak
         costs      = nodes.map {|node| [node, node.range.size] }.to_h
 
         edges.each do |edge|
-          node, node2  = edge.prev, edge.current
+          node, node2    = edge.prev, edge.current
+          node2_cost     = costs[node2]
           new_node2_cost = costs[node] + calc_edge_cost(edge)
 
-          if costs[node2] < new_node2_cost
+          if node2_cost < new_node2_cost
             costs[node2] = new_node2_cost
             prev_nodes[node2] = node
           end
