@@ -64,7 +64,7 @@ module Konjak
 
         node, _ = costs.max_by {|_, cost| cost }
 
-        max_cost_node_indexes = Enumerator.new {|y|
+        Enumerator.new {|y|
           loop do
             break if node == Node::None
             y << node
