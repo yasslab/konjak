@@ -17,11 +17,11 @@ module Konjak
     private
 
     def tmx
-      @options[:tmx] or raise 'tmx option is not set'
+      @options.fetch(:tmx)
     end
 
     def lang
-      @options[:lang] or raise 'lang option is not set'
+      @options.fetch(:lang)
     end
 
     def format
