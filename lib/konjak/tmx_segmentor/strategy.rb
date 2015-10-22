@@ -86,11 +86,22 @@ module Konjak
 
         @edges     = []
         nodes.each_with_index do |node, node_i|
-          ((node_i + 1)...nodes.size).each do |node2_i|
+          next_nodes = ((node_i+1)...nodes.size).drop_while {|node2_i|
             node2 = nodes[node2_i]
+            node2.range.begin < node.range.end
+          }
 
-            next if node2.range.begin < node.range.end
+          next if next_nodes.empty?
 
+          next_node_first = nodes[next_nodes.first]
+
+          next_nodes = next_nodes.take_while do |node2_i|
+            node2 = nodes[node2_i]
+            node2.range.begin <= next_node_first.range.end
+          end
+
+          next_nodes.each do |node2_i|
+            node2 = nodes[node2_i]
             @edges << Edge.new(node, node2)
           end
         end
