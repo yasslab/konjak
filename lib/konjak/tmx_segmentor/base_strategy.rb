@@ -6,7 +6,7 @@ require 'konjak/tmx_segmentor/segment_string'
 
 module Konjak
   class TmxSegmentor < Segmentor
-    class Strategy
+    class BaseStrategy
       Edge = Struct.new(:prev,  :current)
       Node = Struct.new(:range, :segments) do
         def <=>(other)
