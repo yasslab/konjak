@@ -123,9 +123,10 @@ module Konjak
 
       def default_options
         {
-          translation_unit_filter: -> (tu) { true },
-          calc_edge_cost:  -> (edge) { edge.current.max_segment_size },
-          select_next_segment: -> (_, node) { node.segments.first }
+          calc_edge_cost:          -> (edge)    { edge.current.max_segment_size },
+          compile_pattern:         -> (segment) { segment.compile_pattern },
+          select_next_segment:     -> (_, node) { node.segments.first },
+          translation_unit_filter: -> (tu)      { true },
         }
       end
 
