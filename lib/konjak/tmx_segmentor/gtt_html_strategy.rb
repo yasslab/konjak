@@ -7,8 +7,8 @@ module Konjak
 
       private
 
-      def compile_pattern(segment)
-        segment.compile_gtt_html_pattern
+      def default_options
+        super.merge(compile_pattern: -> (segment) { segment.compile_gtt_html_pattern })
       end
     end
   end

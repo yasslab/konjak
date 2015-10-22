@@ -133,6 +133,10 @@ module Konjak
         @options[:calc_edge_cost].call(edge)
       end
 
+      def compile_pattern(segment)
+        @options[:compile_pattern].call(segment)
+      end
+
       def translation_unit_filter
         @options[:translation_unit_filter]
       end
