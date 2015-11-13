@@ -1,6 +1,6 @@
 # Konjak
 
-[![Build Status](https://travis-ci.org/yasslab/konjak.svg?branch=v0.0.1)](https://travis-ci.org/yasslab/konjak)
+[![Build Status](https://travis-ci.org/yasslab/konjak.svg?branch=master)](https://travis-ci.org/yasslab/konjak)
 [![Code Climate](https://codeclimate.com/github/yasslab/konjak/badges/gpa.svg)](https://codeclimate.com/github/yasslab/konjak)
 [![Test Coverage](https://codeclimate.com/github/yasslab/konjak/badges/coverage.svg)](https://codeclimate.com/github/yasslab/konjak/coverage)
 
