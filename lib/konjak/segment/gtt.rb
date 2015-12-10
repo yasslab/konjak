@@ -12,7 +12,7 @@ module Konjak
         gtt_tag_ns.each do |n|
           regexp.sub!(/\\\{#{n}\\\}/)    { "(?<n#{n}><(?<_#{n}>\\w+)[^>]*>)" }
           regexp.gsub!(/\\\{#{n}\\\}/)   { "\\k<n#{n}>" }
-          regexp.gsub!(/\\\{\/#{n}\\\}/) { "</\\k<_#{n}>>" }
+          regexp.gsub!(/\\\{\/#{n}\\\}/) { "(?<nc#{n}></\\k<_#{n}>>)" }
         end
         regexp.gsub!(/\\\s/)                { '\s' }
         regexp.gsub!(/(?<!^)(?:\\s)+(?!$)/) {|s| s + '++' }
@@ -23,7 +23,7 @@ module Konjak
         m = text.match(compile_gtt_html_pattern)
         gtt_tag_ns.each_with_object([]) do |n, tags|
           tags << Tag.new("{#{n}}", m["n#{n}"])
-          tags << Tag.new("{/#{n}}", "</#{m["_#{n}"]}>")
+          tags << Tag.new("{/#{n}}",m["nc#{n}"])
         end
       end
 
