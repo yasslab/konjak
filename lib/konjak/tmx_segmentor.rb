@@ -1,5 +1,6 @@
 require 'konjak/segmentor'
 require 'konjak/tmx_segmentor/gtt_html_strategy'
+require 'konjak/tmx_segmentor/gtt_polytex_strategy'
 require 'konjak/tmx_segmentor/text_strategy'
 
 module Konjak
@@ -8,6 +9,7 @@ module Konjak
     STRATEGIES = {
       text:     TextStrategy,
       gtt_html: GttHtmlStrategy,
+      gtt_polytex: GttPolytexStrategy
     }
 
     def segments

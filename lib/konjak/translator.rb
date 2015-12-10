@@ -22,8 +22,8 @@ module Konjak
         source_segment = text.segment
         target_segment = source_segment.translation_unit.variant(target_lang).segment
 
-        if format == :gtt_html
-          gtt_tags          = source_segment.extract_gtt_tags_from(text)
+        if format == :gtt_html || format == :gtt_polytex
+          gtt_tags          = source_segment.extract_gtt_tags_from(text, format)
           translated_string = target_segment.interpolate_gtt_tags(gtt_tags)
           TranslatedString.new(translated_string, text)
         else
