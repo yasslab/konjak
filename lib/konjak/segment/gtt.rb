@@ -10,7 +10,7 @@ module Konjak
       def compile_gtt_polytex_pattern
         regexp = Regexp.escape(text)
         gtt_tag_ns.each do |n|
-          regexp.sub!(/\\\{#{n}\\\}/)    { "(?<n#{n}>(?:\\\\emph\\{|\\\\href\\{[^\\}]*\\}\\{))" }
+          regexp.sub!(/\\\{#{n}\\\}/)    { "(?<n#{n}>(?:\\\\kode\\{|\\\\emph\\{|\\\\href\\{[^\\}]*\\}\\{))" }
           regexp.gsub!(/\\\{#{n}\\\}/)   { "\\k<n#{n}>" }
           regexp.gsub!(/\\\{\/#{n}\\\}/) { "(?<nc#{n}>\\})" }
         end
