@@ -10,7 +10,8 @@ module Konjak
       def compile_gtt_polytex_pattern
         regexp = Regexp.escape(text)
         regexp.gsub!(/\\}\\ (?!\\ )/)  { '\\}\\\\?\\ ' }
-        regexp.gsub!(/\\\{(?<n1>\d+)\\\}(?:(?<type>Chapter|Figure|Listing|Section|Table)(?:\u00A0|\\\ ))\\\{(?<n2>\d+)\\}\d+\\.\d+\\\{\/\k<n2>\\\}\\\{\/\k<n1>\\\}/) {
+        regexp.gsub!(/’/) { "(?:’|')" }
+        regexp.gsub!(/\\\{(?<n1>\d+)\\\}(?:(?<type>Chapter|Figure|Listing|Section|Table)(?:\u00A0|\\\ ))\\\{(?<n2>\d+)\\}\d+\\.\d+(?:\\.\d+|)\\\{\/\k<n2>\\\}\\\{\/\k<n1>\\\}/) {
           m = $~
           if m[:type]
             "#{m[:type]}~(?<p#{m[:n1]}>\\\\ref{(?:cha|fig|code|sec|table):[^}]+})"
@@ -72,7 +73,7 @@ module Konjak
         new_text = self.text.dup
 
         if format == :gtt_polytex
-          new_text.gsub!(/\{(?<n1>\d+)\}(?:(?<type>[^\}]+(?:\u00A0| )*)|)\{(?<n2>\d+)\}\d+.\d+\{\/\k<n2>\}\{\/\k<n1>\}/) {
+          new_text.gsub!(/\{(?<n1>\d+)\}(?:(?<type>[^\}]+(?:\u00A0| )*)|)\{(?<n2>\d+)\}\d+.\d+(?:.\d+|)\{\/\k<n2>\}\{\/\k<n1>\}/) {
             m = $~
             if m[:type]
               "#{m[:type]}{p#{m[:n1]}}"
