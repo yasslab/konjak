@@ -9,6 +9,7 @@ module Konjak
 
       def compile_gtt_polytex_pattern
         regexp = Regexp.escape(text)
+        regexp.gsub!(/\\}\\ (?!\\ )/)  { '\\}\\\\?\\ ' }
         regexp.gsub!(/\\\{(?<n1>\d+)\\\}(?:(?<type>Chapter|Figure|Listing|Section|Table)(?:\u00A0|\\\ ))\\\{(?<n2>\d+)\\}\d+\\.\d+\\\{\/\k<n2>\\\}\\\{\/\k<n1>\\\}/) {
           m = $~
           if m[:type]
@@ -18,6 +19,7 @@ module Konjak
           end
         }
         gtt_tag_ns.each do |n|
+          regexp.gsub!(/(?<=\\\{#{n}\\\})(?<content>.*)(?=\\\{\/#{n}\\\})/) { $~[:content].gsub(/(?<!\(\?\:)_(?!\))/, '(?:_|\\\\\\\\_)') }
           regexp.sub!(/\\\{#{n}\\\}/)    { "(?<n#{n}>(?:\\\\kode\\{|\\\\emph\\{|\\\\href\\{[^\\}]*\\}\\{))" }
           regexp.gsub!(/\\\{#{n}\\\}/)   { "\\k<n#{n}>" }
           regexp.gsub!(/\\\{\/#{n}\\\}/) { "(?<nc#{n}>\\})" }
