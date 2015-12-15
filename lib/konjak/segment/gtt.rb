@@ -9,25 +9,13 @@ module Konjak
 
       def compile_gtt_polytex_pattern
         regexp = Regexp.escape(text)
-        regexp.gsub!(/\\\{(?<n1>\d+)\\\}(?<type>Chapter|Figure|Listing|Section|Table)(?:\u00A0|\\\ )\\\{(?<n2>\d+)\\}\d+\\.\d+\\\{\/\k<n2>\\\}\\\{\/\k<n1>\\\}/) {
+        regexp.gsub!(/\\\{(?<n1>\d+)\\\}(?:(?<type>Chapter|Figure|Listing|Section|Table)(?:\u00A0|\\\ ))\\\{(?<n2>\d+)\\}\d+\\.\d+\\\{\/\k<n2>\\\}\\\{\/\k<n1>\\\}/) {
           m = $~
-
-          case m[:type]
-          when 'Chapter'
-            ref_type = 'cha'
-          when 'Figure'
-            ref_type = 'fig'
-          when 'Listing'
-            ref_type = 'code'
-          when 'Section'
-            ref_type = 'sec'
-          when 'Table'
-            ref_type = 'table'
+          if m[:type]
+            "#{m[:type]}~(?<p#{m[:n1]}>\\\\ref{(?:cha|fig|code|sec|table):[^}]+})"
           else
-            raise
+            "(?<p#{m[:n1]}>\\\\ref{(?:cha|fig|code|sec|table):[^}]+})"
           end
-
-          "#{m[:type]}~(?<p#{m[:n1]}>\\\\ref{#{ref_type}:[^}]+})"
         }
         gtt_tag_ns.each do |n|
           regexp.sub!(/\\\{#{n}\\\}/)    { "(?<n#{n}>(?:\\\\kode\\{|\\\\emph\\{|\\\\href\\{[^\\}]*\\}\\{))" }
@@ -82,9 +70,13 @@ module Konjak
         new_text = self.text.dup
 
         if format == :gtt_polytex
-          new_text.gsub!(/\{(?<n1>\d+)\}(?<type>[^\}]+(?:\u00A0| )*)\{(?<n2>\d+)\}\d+.\d+\{\/\k<n2>\}\{\/\k<n1>\}/) {
+          new_text.gsub!(/\{(?<n1>\d+)\}(?:(?<type>[^\}]+(?:\u00A0| )*)|)\{(?<n2>\d+)\}\d+.\d+\{\/\k<n2>\}\{\/\k<n1>\}/) {
             m = $~
-            "#{m[:type]}{p#{m[:n1]}}"
+            if m[:type]
+              "#{m[:type]}{p#{m[:n1]}}"
+            else
+              "{p#{m[:n1]}}"
+            end
           }
         end
 
