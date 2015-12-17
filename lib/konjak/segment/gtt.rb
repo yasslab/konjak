@@ -13,6 +13,7 @@ module Konjak
         regexp = Regexp.escape(pattern_text)
         regexp.gsub!(/\\}\\ (?!\\ )/)  { '\\}\\\\?\\ ' }
         regexp.gsub!(/–/) { "(?:–|--)" }
+        regexp.gsub!(/—/) { "(?:—|---)" }
         regexp.gsub!(/’/) { "(?:’|')" }
         regexp.gsub!(/“/) { "(?:“|``)"}
         regexp.gsub!(/”/) { "(?:”|'')"}
