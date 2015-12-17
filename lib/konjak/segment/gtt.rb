@@ -9,7 +9,7 @@ module Konjak
 
       def compile_gtt_polytex_pattern
         pattern_text = text.rstrip
-        pattern_text.gsub!(/\.\{\d+\}\{\d+\}\d+\{\/\d+\}\{\/\d+\}$/, '') # ignore footnote link
+        pattern_text.gsub!(/(?:\.|:)\{\d+\}\{\d+\}\d+\{\/\d+\}\{\/\d+\}$/, '') # ignore footnote link
         regexp = Regexp.escape(pattern_text)
         regexp.gsub!(/\\}\\ (?!\\ )/)  { '\\}\\\\?\\ ' }
         regexp.gsub!(/–/) { "(?:–|--)" }
@@ -79,7 +79,7 @@ module Konjak
 
         if format == :gtt_polytex
           new_text.rstrip!
-          new_text.gsub!(/。?\{\d+\}\{\d+\}\d+\{\/\d+\}\{\/\d+\}。?$/, '') # ignore footnote link
+          new_text.gsub!(/(。|:)?\{\d+\}\{\d+\}\d+\{\/\d+\}\{\/\d+\}(。|:)?$/, '') # ignore footnote link
           new_text.gsub!(/\{(?<n1>\d+)\}(?:(?<type>[^\}]+(?:\u00A0| )*)|)\{(?<n2>\d+)\}\d+.\d+(?:.\d+|)\{\/\k<n2>\}\{\/\k<n1>\}/) {
             m = $~
             if m[:type]
