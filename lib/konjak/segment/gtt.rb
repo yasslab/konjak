@@ -23,7 +23,7 @@ module Konjak
         }
         gtt_tag_ns.each do |n|
           regexp.gsub!(/(?<=\\\{#{n}\\\})(?<content>.*)(?=\\\{\/#{n}\\\})/) { $~[:content].gsub(/(?<!\(\?\:)_(?!\))/, '(?:_|\\\\\\\\_)') }
-          regexp.sub!(/\\\{#{n}\\\}/)    { "(?<n#{n}>(?:\\\\kode\\{|\\\\emph\\{|\\\\href\\{[^\\}]*\\}\\{))" }
+          regexp.sub!(/\\\{#{n}\\\}/)    { "(?<n#{n}>(?:\\\\texttt\\{|\\\\kode\\{|\\\\emph\\{|\\\\href\\{[^\\}]*\\}\\{))" }
           regexp.gsub!(/\\\{#{n}\\\}/)   { "\\k<n#{n}>" }
           regexp.gsub!(/\\\{\/#{n}\\\}/) { "(?<nc#{n}>\\})" }
         end
