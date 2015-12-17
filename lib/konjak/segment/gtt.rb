@@ -29,7 +29,7 @@ module Konjak
         end
         regexp.gsub!(/\\\s/)                { '\s' }
         regexp.gsub!(/(?<!\\s|\\)\\s(?!\\s)/, '(?:\s|~)')
-        regexp.gsub!(/(?<!^|\\)(?:\\s)+(?!$)/) {|s| s + '++' }
+        regexp.gsub!(/(?<!^|\\)(?:\\s)+(?!$)/) {|s| "(\\\\linebreak|#{s})++" }
         Regexp.compile(regexp)
       end
 
