@@ -11,7 +11,7 @@ module Konjak
         regexp = Regexp.escape(text)
         regexp.gsub!(/\\}\\ (?!\\ )/)  { '\\}\\\\?\\ ' }
         regexp.gsub!(/’/) { "(?:’|')" }
-        regexp.gsub!(/\\\{(?<n1>\d+)\\\}(?:(?<type>Chapter|Figure|Listing|Section|Table)(?:\u00A0|\\\ ))\\\{(?<n2>\d+)\\}\d+\\.\d+(?:\\.\d+|)\\\{\/\k<n2>\\\}\\\{\/\k<n1>\\\}/) {
+        regexp.gsub!(/\\\{(?<n1>\d+)\\\}(?:(?<type>Chapter|Figure|Listing|Section|Table)(?:\u00A0|\\\ ))\\\{(?<n2>\d+)\\}\d+(?:\\.\d+|)(?:\\.\d+|)\\\{\/\k<n2>\\\}\\\{\/\k<n1>\\\}/) {
           m = $~
           if m[:type]
             "#{m[:type]}~(?<p#{m[:n1]}>\\\\ref{(?:cha|fig|code|sec|table):[^}]+})"
