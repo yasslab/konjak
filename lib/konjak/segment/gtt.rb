@@ -12,6 +12,7 @@ module Konjak
         pattern_text.gsub!(/\.\{\d+\}\{\d+\}\d+\{\/\d+\}\{\/\d+\}$/, '') # ignore footnote link
         regexp = Regexp.escape(pattern_text)
         regexp.gsub!(/\\}\\ (?!\\ )/)  { '\\}\\\\?\\ ' }
+        regexp.gsub!(/–/) { "(?:–|--)" }
         regexp.gsub!(/’/) { "(?:’|')" }
         regexp.gsub!(/“/) { "(?:“|``)"}
         regexp.gsub!(/”/) { "(?:”|'')"}
