@@ -8,7 +8,9 @@ module Konjak
       Tag = Struct.new(:gtt, :matched)
 
       def compile_gtt_polytex_pattern
-        regexp = Regexp.escape(text.rstrip)
+        pattern_text = text.rstrip
+        pattern_text.gsub!(/\.\{\d+\}\{\d+\}\d+\{\/\d+\}\{\/\d+\}$/, '') # ignore footnote link
+        regexp = Regexp.escape(pattern_text)
         regexp.gsub!(/\\}\\ (?!\\ )/)  { '\\}\\\\?\\ ' }
         regexp.gsub!(/’/) { "(?:’|')" }
         regexp.gsub!(/“/) { "(?:“|``)"}
