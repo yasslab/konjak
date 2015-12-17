@@ -77,6 +77,8 @@ module Konjak
         new_text = self.text.dup
 
         if format == :gtt_polytex
+          new_text.rstrip!
+          new_text.gsub!(/。?\{\d+\}\{\d+\}\d+\{\/\d+\}\{\/\d+\}。?$/, '') # ignore footnote link
           new_text.gsub!(/\{(?<n1>\d+)\}(?:(?<type>[^\}]+(?:\u00A0| )*)|)\{(?<n2>\d+)\}\d+.\d+(?:.\d+|)\{\/\k<n2>\}\{\/\k<n1>\}/) {
             m = $~
             if m[:type]
