@@ -25,6 +25,21 @@ module Konjak
             "(?<p#{m[:n1]}>\\\\ref{(?:cha|fig|code|sec|table):[^}]+})"
           end
         }
+        regexp.gsub!(/\\\{(?<x1>\d+)\\\}\\\{(?<x2>\d+)\\\}\\\{\/\k<x2>\\\}\\\{\k<x2>\\\}\\\{(?<x3>\d+)\\\}(?<result>green|red)\\\{\/\k<x3>\\\}\\\{\/\k<x2>\\\}\\\{\k<x2>\\\}\\\{\/\k<x2>\\\}\\\{\/\k<x1>\\\}(?<backslash>\\\{(?<x4>\d+)\\\}\\\{\/\k<x4>\\\})?/) do
+          m = $~
+
+          if m[:result] != 'green' && m[:result] != 'red'
+            next original
+          end
+
+          result = m[:result] == 'green' ? '\\\\passing' : '\\\\\failing'
+
+          if m[:backslash]
+            result + '\\s\\\\\\\\\\s'
+          else
+            result
+          end
+        end
         gtt_tag_ns.each do |n|
           regexp.gsub!(/(?<=\\\{#{n}\\\})(?<content>.*)(?=\\\{\/#{n}\\\})/) {
             content = $~[:content].dup
@@ -86,6 +101,16 @@ module Konjak
 
         if format == :gtt_polytex
           new_text.rstrip!
+          new_text.gsub!(/\{(?<x1>\d+)\}\{(?<x2>\d+)\}\{\/\k<x2>\}\{\k<x2>\}\{(?<x3>\d+)\}(?<result>GREEN|RED)\{\/\k<x3>\}\{\/\k<x2>\}\{\k<x2>\}\{\/\k<x2>\}\{\/\k<x1>\}(?<backslash>\\\{(?<x4>\d+)\\\}\\\{\/\k<x4>\\\})?/) do |original|
+            m = $~
+            result = m[:result] == 'GREEN' ? ' \\passing ' : ' \\failing '
+
+            if m[:backslash]
+              result + ' \\\\ '
+            else
+              result
+            end
+          end
           new_text.gsub!(/(。|:)?\{\d+\}\{\d+\}\d+\{\/\d+\}\{\/\d+\}(。|:)?$/, '') # ignore footnote link
           new_text.gsub!(/\{(?<n1>\d+)\}(?:(?<type>[^\}]+(?:\u00A0| )*)|)\{(?<n2>\d+)\}\d+(?:.\d+|)(?:.\d+|)\{\/\k<n2>\}\{\/\k<n1>\}/) {
             m = $~
