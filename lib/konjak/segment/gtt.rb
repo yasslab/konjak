@@ -33,7 +33,7 @@ module Konjak
             }
             content
           }
-          regexp.sub!(/\\\{#{n}\\\}/)    { "(?<n#{n}>(?:\\\\filepath\\{|\\\\texttt\\{|\\\\kode\\{|\\\\emph\\{|\\\\href\\{[^\\}]*\\}\\{))" }
+          regexp.sub!(/\\\{#{n}\\\}/)    { "(?<n#{n}>(?:\\\\codecaption\\{|\\\\filepath\\{|\\\\texttt\\{|\\\\kode\\{|\\\\emph\\{|\\\\href\\{[^\\}]*\\}\\{))" }
           regexp.gsub!(/\\\{#{n}\\\}/)   { "\\k<n#{n}>" }
           regexp.gsub!(/\\\{\/#{n}\\\}/) { "(?<nc#{n}>\\})" }
         end
