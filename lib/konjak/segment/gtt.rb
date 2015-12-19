@@ -13,6 +13,9 @@ module Konjak
         pattern_text.gsub!(/\A(?<codecaption>\{0\}Listing \d+\.\d+:\{\/0\} ?\n\n)\{1\}(?<content>.*)\{\/1\}\z/) do
           $~[:content].gsub(/(?:\{(\d+)\}\{(\d+)\}\{\/\2\}\{\2\}\{(\d+)\}(?:red|green)\{\/\3\}\{\/\2\}\{\2\}\{\/\2\}\{\/\1\})?\s*\{(\d+)\}\{\/\4\}\s+\{(\d+)\}.*\{\/\5\}\s*$/, '')
         end
+        pattern_text.gsub!(/\A\{0\}(?:Table|Figure) \d+\.\d+: \{\/0\}\{1\}(?<content>.*)\{\/1\}\z/) do
+          $~[:content]
+        end
         regexp = Regexp.escape(pattern_text)
         regexp.gsub!(/\\}\\ (?!\\ )/)  { '\\}\\\\?\\ ' }
         regexp.gsub!(/–/) { "(?:--|–)" }
@@ -103,6 +106,10 @@ module Konjak
 
           new_text.gsub!(/\A(?<codecaption>\{0\}リスト\s*\d+\.\d+:\{\/0\} ?\n\n)\{1\}(?<content>.*)\{\/1\}\z/) do
             $~[:content].gsub(/(?:\{(\d+)\}\{(\d+)\}\{\/\2\}\{\2\}\{(\d+)\}(?:RED|GREEN)\{\/\3\}\{\/\2\}\{\2\}\{\/\2\}\{\/\1\})?\s*\{(\d+)\}\{\/\4\}\s+\{(\d+)\}.*\{\/\5\}\s*$/, '')
+          end
+
+          new_text.gsub!(/\A\{0\}(?:表|図)\s*\d+\.\d+:\s*\{\/0\}\{1\}(?<content>.*)\{\/1\}\z/) do
+            $~[:content]
           end
 
           new_text.gsub!(/\{(?<x1>\d+)\}\{(?<x2>\d+)\}\{\/\k<x2>\}\{\k<x2>\}\{(?<x3>\d+)\}(?<result>GREEN|RED)\{\/\k<x3>\}\{\/\k<x2>\}\{\k<x2>\}\{\/\k<x2>\}\{\/\k<x1>\}/) do |original|
