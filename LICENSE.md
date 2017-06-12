@@ -1,4 +1,4 @@
-Copyright &copy; 2014-2015 [YassLab](http://yasslab.jp)
+Copyright &copy; 2014-2017 [YassLab](https://yasslab.jp)
 
 The MIT License
 
