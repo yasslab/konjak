@@ -34,6 +34,8 @@ Or install it yourself as:
 
 ## License
 
-Copyright &copy; 2015 [YassLab](http://yasslab.jp)
+Copyright &copy; 2015-2017 [YassLab](https://yasslab.jp)
 
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
+
+[![YassLab Logo](https://yasslab.jp/img/logo_800x200.png)](https://yasslab.jp/)
